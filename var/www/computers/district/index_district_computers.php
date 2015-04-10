@@ -1,3 +1,4 @@
+
 <?php
 $page_title = 'View District Computer Inventory';
 //from VIEW ENTIRE COMPUTER INVENTORY option on header. Select radio buttons by model or school
@@ -5,11 +6,16 @@ include ('../../includes/header_district_computers.html');
 #echo '<h1 id="mainhead">Printers</h1>';
 ?>
 
+
+
 <?php
 
 if (isset($_POST['submit'])) {					//OPEN SUBMIT
 
   require_once ('../../../mysql_connect_computers.php');
+
+
+
 
 if ( !isset($_POST['search'])  ){
 	
@@ -135,7 +141,9 @@ if ($result) {
   echo '<tr><td align="left">' . $row['model'] . '</td>
 
   <td align="left">' . $row['computer_type'] . '</td>
+
   <td align="left">' . $row['service_tag'] . '</td>
+
   <td align="left">' . $row['school'] . '</td>
 
 </tr>';
@@ -153,11 +161,13 @@ We apologize for any inconvenience.</p>';
 mysql_close();  
 exit();
 
+
  }
 
 //SORT BY SERVICE TAG OR SERIAL NUMBER
 
 else if ($search=='N'   ) {
+
 
 $query = "SELECT model, computer_type, service_tag, school FROM
 computer_models,computer_types,computers,schools WHERE computers.model_id=computer_models.model_id AND computer_types.ct_id = computer_models.ct_id AND computers.school_id=schools.school_id ORDER BY service_tag" ;
@@ -179,7 +189,9 @@ if ($result) {
   echo '<tr><td align="left">' . $row['model'] . '</td>
 
   <td align="left">' . $row['computer_type'] . '</td>
+
   <td align="left">' . $row['service_tag'] . '</td>
+
   <td align="left">' . $row['school'] . '</td>
 
 </tr>';
@@ -197,7 +209,9 @@ We apologize for any inconvenience.</p>';
 mysql_close();  
 exit();
 
+
  }
+
 
 }  //CLOSE THE SUBMIT
 include ('../../includes/footer.html');
@@ -205,9 +219,9 @@ include ('../../includes/footer.html');
 
 <center>
 <form action="index_district_computers.php" method="post">
-
+&nbsp;
 <h1 id="mainhead">District Computer Inventory</h1>
-<h3>Reporting Schools: South, Laurel Plains, New City, Strawtown, West Nyack</h3>
+<h3>Reporting Schools: South, Bardonia, Chestnut Grove, Laurel Plains, New City, Strawtown, West Nyack. <br />Also, iPads only: Woodglen, Link</h3>
 <fieldset style="width:500px"><legend>View computer inventory for Clarkstown School District</legend>
 
 <p>Sort by: <input type="radio" name="search" value="M" />Computer Model 
@@ -230,3 +244,5 @@ Info Request" /></div>
 </center>
 </body>
 </html>
+
+
