@@ -1,5 +1,7 @@
 <?php # - mysql_connect.php
 
+# These generic values should be set to those matching your database setup
+
 DEFINE ('DB_USER', 'root');
 DEFINE ('DB_PASSWORD', 'admin');
 DEFINE ('DB_HOST', 'localhost');
