@@ -21,6 +21,8 @@ include ('../../includes/header_district_computers2.php');
 require_once ('../../../mysql_connect_computers.php');
 
 
+
+
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
 
 
@@ -63,6 +65,10 @@ Info Request" /></div>
 
 //End of the submission form for receiving school ID and choosing sort preference
 }
+
+
+
+
 
 
 //Query COMPUTERS based on information submitted in search preference form
@@ -236,6 +242,11 @@ if ($result) {
   <td align="left"><b>Model</b></td>
   <td align="left"><b>Room</b></td>
   <td align="left"><b>Name</b></td>
+
+
+
+
+
 
 </tr>';
 

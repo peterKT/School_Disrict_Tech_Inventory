@@ -213,6 +213,14 @@ exit();
  }
 
 
+
+
+
+
+
+
+
+
 }  //CLOSE THE SUBMIT
 include ('../../includes/footer.html');
 ?>
@@ -221,7 +229,7 @@ include ('../../includes/footer.html');
 <form action="index_district_computers.php" method="post">
 &nbsp;
 <h1 id="mainhead">District Computer Inventory</h1>
-<h3>Reporting Schools: South, Bardonia, Chestnut Grove, Laurel Plains, New City, Strawtown, West Nyack. <br />Also, iPads only: Woodglen, Link</h3>
+<h3>Reporting Schools: Bardonia, Birchwood, Chestnut Grove, Laurel Plains, Strawtown, West Nyack</h3>
 <fieldset style="width:500px"><legend>View computer inventory for Clarkstown School District</legend>
 
 <p>Sort by: <input type="radio" name="search" value="M" />Computer Model 

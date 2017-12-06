@@ -43,6 +43,12 @@ mysql_close();
 exit();
  }
 
+
+
+
+
+
+
 ?>
 
 <!-- 
@@ -53,6 +59,9 @@ exit();
 <div align="center"><input type="submit" name="submit" value="Submit 
 School Selection" /></div>
 </form>
+
+
+
 
 </body>
 </html>
