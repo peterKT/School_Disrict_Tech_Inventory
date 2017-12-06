@@ -489,6 +489,8 @@ echo 	'<input type="hidden" name="schools" value="' . $school_id . '" />';
 </form>
 
 
+
+
 <?php
 include ('../../includes/footer.html');
 ?>
