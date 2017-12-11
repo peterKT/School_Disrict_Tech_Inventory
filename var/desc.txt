@@ -1,0 +1,4 @@
+﻿Field       Type	                  Null	      Key	Default	Extra
+teacher_id	smallint(4) unsigned	NO	      PRI	NULL	      auto_increment
+last_name	varchar(20)	            YES		      NULL	
+first_name	varchar(20)	            YES		      NULL	
