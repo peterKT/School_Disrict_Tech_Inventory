@@ -1,5 +1,4 @@
 # inventory
-Modest inventory system
 The plan for this repository is to present the HTML/PHP pages used to fashion a simple inventory system for a school district's technology equipment. It is intended as a low-key aid for use by IT support personnel who have some familiarity with the various technologies: PHP, MySQL, HTML. It does not pretend to be more than that, certainly not an enterprise-level solution.
 
 Inventory management involves different sorts of items (computers, printers, projectors), different attributes of those items (model numbers, item types, i.e. laserjet printer, inkjet printer, etc.), locations (buildings, rooms inside buildings), and other features. Of course, that means bringing in a backend database to hold all this information.
