@@ -1,7 +1,7 @@
 
 <?php
 $page_title = 'Select a School';
-
+//2018a
 
 include ('../../includes/header_district_computers.html');
 
@@ -14,10 +14,10 @@ include ('../../includes/header_district_computers.html');
 
 <?php
 
-require_once ('../../../mysql_connect_computers.php');
+require_once ('../../../mysql_connect_inventory.php');
 
 
-$query = "select school_id,school from schools where school_id != 23 order by school" ;
+$query = "select school_id,school from schools where school_id != 24 order by school" ;
 
 $result = @mysql_query($query);
 

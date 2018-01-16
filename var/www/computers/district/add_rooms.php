@@ -1,14 +1,15 @@
 
 <?php
-$page_title = 'Select a School';
 //2018a
+$page_title = 'Select a School';
+
 
 include ('../../includes/header_district_computers.html');
 
 ?>
-<h2>Select a building to view inventory</h2>
+<h2>Select a building before adding new room</h2>
 
-<form action="district_view_computers.php" method="post">
+<form action="district_add_locations.php" method="post">
 <fieldset><legend>Select a School</legend>
 
 
@@ -44,12 +45,26 @@ exit();
  }
 
 
+
+// OK SO FAR
+
+
+
+
 ?>
 
+<!-- 
+<p>Sort by: <input type="radio" name="sort" value="model" />Model 
+<input type="radio" name="sort" value="rooms.room_id" />Room
+ -->
 </fieldset>
 <div align="center"><input type="submit" name="submit" value="Submit 
 School Selection" /></div>
 </form>
+
+
+
+
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 <?php #  - district_edit_computers2.php
-
+//2018a
 //accessed through district_view_computers2.php
 
 $page_title = 'Edit Computer Info';
@@ -31,7 +31,7 @@ include ('../../includes/footer.html');
 exit();
 }
 
-  require_once ('../../../mysql_connect_computers.php');
+  require_once ('../../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 
@@ -62,8 +62,6 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 		} else {
 
   			$cm = $_POST['change_model'];
-
-		
 		}	
 
 		if (empty($_POST['change_room'])) {
@@ -71,12 +69,10 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 		} else {
 			
   			$cr = $_POST['change_room'];
-
-		
 		}	
 
 
-//FINISH CHECKING FOR ERRORS
+								//FINISH CHECKING FOR ERRORS
 
 
 if (empty($errors)) {						//OPEN IF NO ERRORS	
@@ -131,13 +127,13 @@ if ( $cr === "yes" ) {
 
 $room = $_POST['room_change'] ;
 
-$query7 = "UPDATE computers SET room_id=$room WHERE computer_id=$id";
+$query7 = "UPDATE computers,locations,room_names SET computers.location_id=locations.location_id WHERE computer_id=$id AND locations.school_id=$school_id AND locations.room_name_id=$room";
 	$result7 = @mysql_query($query7);
 		if (mysql_affected_rows() == 1) {
 			echo '<p>The room information has been edited.</p>';
 
 
-	$body = "Room information for computer with ID '$id' has been edited.  The new room is '$room' \n\n" ;
+	$body = "Room information for computer with ID '$id' has been edited.  The new room ID is '$room' \n\n" ;
 	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_computers2.php');
 
 
@@ -224,7 +220,13 @@ $query4 = "UPDATE computers SET model_id=$model WHERE computer_id=$id";
 
 //From district_view_computers2, with $id value equal to the computer_id in computers table.
 
+
+$query = "SELECT school, room_name, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM schools, room_names, computer_models, computer_types, computers, locations WHERE computers.location_id=locations.location_id and locations.school_id=schools.school_id AND room_names.room_name_id=locations.room_name_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.computer_id=$id";
+
+/*
+
 $query = "SELECT school, room, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM schools, rooms, computer_models, computer_types, computers WHERE schools.school_id=computers.school_id AND rooms.room_id=computers.room_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.computer_id=$id";
+*/
 
 	$result = mysql_query($query);
 	if (mysql_num_rows($result) == 1 ) {
@@ -243,37 +245,10 @@ $query = "SELECT school, room, CONCAT(model, ' ',computer_type) AS model, comput
 <p> <input type="radio" name="change_room" value="no">  No </p>
 <p> <input type="radio" name="change_room" value="yes">  Yes (select from following list) </p>' ;
 
-//For South HS
-
-if ( $school_id == 11 ) {
 
 
-$query6 = "SELECT room_id,room FROM rooms WHERE school_id = $school_id AND room_id != 152 AND room_id !=153 AND room_id !=154 order by room" ;
-
-$result6 = @mysql_query($query6);
-
-
-if ($result6) {
- 
-  echo '<select name="room_change">';
-  while ($row6 = mysql_fetch_array($result6, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row6['room_id'] . '">' . ' ' . $row6['room'] . '</option>\\n';
-
-  	}  echo '</select>'; 
-	mysql_free_result ($result6);
-
-} else {
-  echo '<p class="error">The rooms could not be retrieved. 
-We apologize for any inconvenience.</p>';
-
-  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query6 . '</p>';
-
-mysql_close();  
-exit();
- }
-} else {
 	
-	$query7 = "SELECT room_id,room FROM rooms WHERE school_id = $school_id order by room" ;
+$query7 = "SELECT room_names.room_name_id,room_name FROM room_names,locations WHERE locations.school_id = $school_id AND locations.room_name_id=room_names.room_name_id order by room_name" ;
 
 $result7 = @mysql_query($query7);
 
@@ -282,7 +257,7 @@ if ($result7) {
  
   echo '<select name="room_change">';
   while ($row7 = mysql_fetch_array($result7, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row7['room_id'] . '">' . ' ' . $row7['room'] . '</option>\\n';
+  	echo '<option value="' . $row7['room_name_id'] . '">' . ' ' . $row7['room_name'] . '</option>\\n';
 
   	}  echo '</select>'; 
 	mysql_free_result ($result7);
@@ -297,7 +272,7 @@ mysql_close();
 exit();
  }
 	
-	}
+//	}
 
 
 
@@ -318,8 +293,6 @@ if ($result5) {
   echo '<select name="model_change">';
   while ($row5 = mysql_fetch_array($result5, MYSQL_ASSOC)) {
   	echo '<option value="' . $row5['model_id'] . '">' . ' ' . $row5['model'] . ' ' . $row5['computer_type'] . '</option>\\n';
-
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
 
   	}  echo '</select>'; 
 	mysql_free_result ($result5);
