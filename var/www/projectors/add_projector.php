@@ -1,13 +1,10 @@
 <?php # add_projector.php
 
-
-
 $page_title = 'Add Projector';
+
 include ('../includes/header_projectors.html');
 
-
-
-  if ( isset($_POST['schools']) ) {
+if ( isset($_POST['schools']) ) {
 
     		$school_id = $_POST['schools'] ;
   			}
@@ -20,11 +17,8 @@ include ('../includes/header_projectors.html');
   	exit();
 	}
 
-
-
-
 //Set up the school name
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
 
@@ -38,128 +32,70 @@ $school = $row['school'];
 
 mysql_free_result ($result);
 
-
-
-
-
 if (isset($_POST['submitted']) ) {				// START SUBMIT, MUST CLOSE
   $errors = array();
 
 								// START ERROR COLLECTION
- 
-
-if (empty($_POST['model'])) {	
+ if (empty($_POST['model'])) {	
   $errors[] = 'You must enter a model.';
 } else {
-  $model = $_POST['model'];	
+  $model = $_POST['model'];					// GATHER MODEL_ID
 }
 
 
 //SELECT ROOM
 
-//ONLY FOR SCHOOL_ID 11
-
-if ($school_id == 11) {
-
-if ($_POST['room1'] != '152') {
-	$room1 = $_POST['room1'] ;
-	} 
-
-if ($_POST['room2'] != '153') {
-	$room2 = $_POST['room2'] ;
+if (isset($_POST['room0']) ) 
+	{
+		$room_id = $_POST['room0'] ;
+		echo "You entered room ID $room_id";	
+	} else { 
+		$errors[] = 'Your room0 value is messed up.';
 	}
-
-if ($_POST['room3'] != '154') {
-	$room3 = $_POST['room3'] ;
-	}
-
-
-if ($room1 && $room2 || $room1 && $room3 || $room2 && $room3) {
-	echo "You selected $room1 and $room2 and $room3<br>";
-	$errors[] = 'Sorry, only one room may be selected.' ;
-	}
-	
-
-if ( !empty($room1) ) {
-	$room_id = $room1 ; 
-	}
-
-elseif (!empty($room2) ) {
-	$room_id = $room2;
-	}
-
-elseif (!empty($room3) ) {
-	$room_id = $room3 ;
-	}
-
-
-
-else { $errors[] = 'You must select a room.';
-	}
-
-
-
-}
-
-//Select room for all other buildings
-
-else {
-
-if (isset($_POST['room0']) ) {
-	
-	$room_id = $_POST['room0'] ;
-	echo "You entered room ID $room_id";	
-	} else { $errors[] = 'Your room0 value is messed up.';
-}
-}
-
 
 //END SELECT ROOM
 
 
-
 if (empty($errors)) {						// START IF EMPTY ERRORS, MUST CLOSE
 
+// LEFT OFF HERE
 
-//Determine the room_id value based on information submitted in the form
-
-
-
-
-
+//Determine the location_id value based on information submitted in the form
 //CHECK FOR EXISTING PROJECTOR
 
-$query = "SELECT projector_id FROM projectors WHERE projectors.school_id=$school_id AND projectors.room_id=$room_id";
-$result = mysql_query($query);
+$query0= "SELECT location_id FROM locations WHERE school_id=$school_id AND room_name_id=$room_id";
+
+$result0 = mysql_query($query0);
+$row = mysql_fetch_array($result0,MYSQL_NUM);
+$location = $row[0] ;
 
 
-if (mysql_num_rows($result)==0) {		   		//CHECK FOR CURRENT ROOM STATUS			
+$query1 = "SELECT projector_id FROM projectors where location_id=$location";
+$result1 = mysql_query($query1);
+
+if (mysql_num_rows($result1)==0) {		   		//CHECK FOR CURRENT ROOM STATUS			
 	
 echo "<p>This location does not currently have a projector</p>";
 
 	} else {   							
-	echo "<p>Warning, this room already has a projector. You are adding a second one.</p>";
-		
+	echo "<p>Warning, this room already has a projector. You are adding another.</p>";
 	}			
-
-
-
 
 //MAKE THE QUERY IF OK
 //Enter the printer model and its type
 
 
-  $query = "INSERT INTO projectors (model_id,school_id,room_id) VALUES
-  ('$model','$school_id','$room_id')";
+  $query2 = "INSERT INTO projectors (model_id,location_id) VALUES
+  ('$model','$location')";
 
-$result = mysql_query($query); 
-if ($result) {
+$result2 = mysql_query($query2); 
+if ($result2) {
   
   echo '<h1 id="mainhead">Thank you!</h1>
   <p>Your projector model and location went through.</p><p>
   <br /></p>';
   
-  $body = "A new projector with ID '$model' been added to room $room in $school.\n\n" ;
+  $body = "A new projector '$model' been added to room ID $room_id in $school.\n\n" ;
 	mail ('ptitus@localhost', 'Change in projectors database', $body, 'From: add_projector.php');
   }
 
@@ -177,7 +113,7 @@ if ($result) {
 
 
 
-} else      { 						//  Close If empty errors
+} else  { 						//  Close If empty errors
   	echo '<h1 id="mainhead">Error!</h1>
   	<p class="error">The following error(s) occurred:<br />';
   	foreach ($errors as $msg) {
@@ -187,7 +123,7 @@ if ($result) {
   	echo '</p><p>Please try again.</p><p><br /></p>' ;
  
 	exit();
-}
+	}
 
 										//close the submit
 }
@@ -208,9 +144,9 @@ School ID = $school_id" ;
 <h3>Select Projector Model</h3>
 <?php
 
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,model_id FROM manufacturers,models WHERE models.mf_id=manufacturers.mf_id" ;
+$query = "SELECT CONCAT(mf, ' ',model) AS model,model_id FROM manufacturers,projector_models WHERE projector_models.mf_id=manufacturers.mf_id" ;
 
 $result = @mysql_query($query);
 
@@ -247,124 +183,10 @@ exit();
 <h3>Identify Location</h3>
 <?php
 
-//require_once ('../../mysql_connect_computers.php');
-
-
-/*
-Use this query to limit select list to an individual building. No need to the floor-specific search for one-story buildings.
-
-select room from rooms,computers where computers.room_id = rooms.room_id and rooms.room like '1%' and rooms.room_id not in (152,153,154,176) and computers.school_id=11 group by room
-
-*/
-
-
-
-
-// echo "School ID is $school_id <br /><br />";
-
-if ($school_id == 11) {
-
-echo '<h4>First Floor</h4>';
-
-$query = "SELECT room, room_id FROM rooms WHERE school_id=11 AND room LIKE '1%' ORDER BY room" ;
-
-$result = @mysql_query($query);
-
-if ($result) {
- 
-  echo '<select name="room1">';
-  while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row['room_id'] . '">' . ' ' . $row['room'] . '</option>\\n';
-
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
-
-  	}  echo '</select>'; 
-	
-
-mysql_free_result ($result);
-} else {
-  echo '<p class="error">The rooms could not be retrieved. 
-We apologize for any inconvenience.</p>';
-
-  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
-
-
-mysql_close();  
-exit();
- }
-
-// SECOND FLOOR
-
-echo '<h4>Second Floor</h4>';
-$query = "SELECT room, room_id FROM rooms WHERE school_id = $school_id AND room LIKE '2%' ORDER BY room" ;
-
-$result = @mysql_query($query);
-
-
-if ($result) {
- 
-  echo '<select name="room2">';
-  while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row['room_id'] . '">' . ' ' . $row['room'] . '</option>\\n';
-
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
-
-  	}  echo '</select>'; 
-	
-
-mysql_free_result ($result);
-} else {
-  echo '<p class="error">The rooms could not be retrieved. 
-We apologize for any inconvenience.</p>';
-
-  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
-
-
-mysql_close();  
-exit();
- }
-
-// THIRD FLOOR
-
-echo '<h4>Third Floor</h4>';
-$query = "SELECT room, room_id FROM rooms WHERE school_id=$school_id AND room LIKE '3%' ORDER BY room" ;
-
-$result = @mysql_query($query);
-
-
-if ($result) {
- 
-  echo '<select name="room3">';
-  while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row['room_id'] . '">' . ' ' . $row['room'] . '</option>\\n';
-
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
-
-  	}  echo '</select>'; 
-	
-
-mysql_free_result ($result);
-} else {
-  echo '<p class="error">The rooms could not be retrieved. 
-We apologize for any inconvenience.</p>';
-
-  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
-
-
-mysql_close();  
-exit();
- }
-
-}	//END SELECT ROOMS IF SCHOOL IS ID=11 (MODIFY FOR OTHER MULTI-STORY BUILDINGS)
-
-//NOW CREATE ROOM SELECTIONS FOR SINGLE-FLOOR BUILDINGS BASED ON SCHOOL_ID
-
-else {
-
 echo "<h4>All rooms in $school</h4>";
 //echo "School ID is $school_id <br /><br />";	
 	
-$query = "SELECT room_id,room FROM rooms WHERE school_id=$school_id ORDER BY room" ;
+$query = "SELECT room_names.room_name_id,room_names.room_name FROM room_names,locations WHERE locations.school_id=$school_id AND locations.room_name_id=room_names.room_name_id ORDER BY room_name" ;
 
 $result = @mysql_query($query);
 
@@ -372,7 +194,7 @@ if ($result) {
  
   echo '<select name="room0">';
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  	echo '<option value="' . $row['room_id'] . '">' . ' ' . $row['room'] . '</option>\\n';
+  	echo '<option value="' . $row['room_name_id'] . '">' . ' ' . $row['room_name'] . '</option>\\n';
 
   	}  echo '</select>'; 
 	
@@ -390,11 +212,6 @@ mysql_close();
 exit();
  }
 	
-
-
-}
-
-
 ?>
 
 <br /><br /><br /><br />

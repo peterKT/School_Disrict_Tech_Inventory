@@ -19,7 +19,7 @@ include ('../includes/footer.html');
 exit();
 }
 
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 
@@ -82,7 +82,7 @@ $query4 = "UPDATE projectors SET model_id=$model WHERE projector_id=$id";
 							//CLOSE SUBMITTED
 
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,room,projector_id from manufacturers,models,rooms,projectors WHERE projector_id=$id and projectors.model_id=models.model_id and manufacturers.mf_id=models.mf_id and rooms.room_id=projectors.room_id" ;
+$query = "SELECT CONCAT(mf, ' ',model) AS model,room_name,projector_id FROM manufacturers,projector_models,room_names,locations,projectors WHERE projector_id=$id AND projectors.model_id=projector_models.model_id AND manufacturers.mf_id=projector_models.mf_id AND projectors.location_id=locations.location_id AND room_names.room_name_id=locations.room_name_id" ;
 
 	$result = mysql_query($query);
 	if (mysql_num_rows($result) == 1 ) {
@@ -104,7 +104,7 @@ echo '<p>Model: ' . $row[0] . '</p>
 <p> <input type="radio" name="change_model" value="no">  No </p>
 <p> <input type="radio" name="change_model" value="yes">  Yes (select from following list) </p>' ;
 
-$query5 = "SELECT CONCAT(mf, ' ',model) AS model,model_id from manufacturers,models WHERE manufacturers.mf_id=models.mf_id" ;
+$query5 = "SELECT CONCAT(mf, ' ',model) AS model,model_id from manufacturers,projector_models WHERE manufacturers.mf_id=projector_models.mf_id" ;
 
 $result5 = @mysql_query($query5);
 
@@ -114,9 +114,6 @@ if ($result5) {
   echo '<select name="model_change">';
   while ($row5 = mysql_fetch_array($result5, MYSQL_ASSOC)) {
   	echo '<option value="' . $row5['model_id'] . '">' . ' ' . $row5['model'] . '</option>\\n';
-
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
-
   	}  echo '</select>'; 
 	mysql_free_result ($result5);
 

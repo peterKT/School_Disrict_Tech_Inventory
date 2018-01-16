@@ -12,8 +12,8 @@ include ('../includes/header_projectors.html');
 
 <?php
 
-require_once ('../../mysql_connect_projectors.php');
-$query = "select school_id,school from schools where school_id != 4 order by school" ;
+require_once ('../../mysql_connect_inventory.php');
+$query = "select school_id,school from schools order by school" ;
 
 $result = @mysql_query($query);
 

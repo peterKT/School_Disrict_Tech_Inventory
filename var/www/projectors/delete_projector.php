@@ -12,12 +12,12 @@ if (  (isset($_GET['id']))  && (is_numeric($_GET['id'])) )  {		//CHECK FOR CORRE
 } else {
 	echo '<h1 id="mainhead">
 	Page Error</h1>
-	<p class="error">This here page has been accessed in error.</p><p><br /><br /></p>';
+	<p class="error">This page has been accessed in error.</p><p><br /><br /></p>';
 include ('../includes/footer.html');
 exit();
 }
 
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 	if ($_POST['sure'] == 'Yes' ) {					//START CONDITION 1
@@ -39,20 +39,20 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 			} else  {
 
 				echo '<h1 id="mainhead">System Error</h1>
-				<p class="error">The computer could not be deleted due to a system error.</p>';
+				<p class="error">The projector could not be deleted due to a system error.</p>';
 				echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
 			}
 									//CLOSE CONDITION 2
 
 	} else {							// IF CONDITION 1 NOT MET
-		echo '<h1 id="mainhead">Delete a Computer</h1>
-		<p>The computer has NOT been deleted.</p>
+		echo '<h1 id="mainhead">Delete a Projector</h1>
+		<p>The the projector has NOT been deleted.</p>
 		<p><br /><br /></p>';
 		}							//CLOSE CONDITION 1
 
-} else { 								//CLOSE SUBMITTED  //OPEN NOT SUBMITTED
+} else { 				//CLOSE SUBMITTED  //OPEN NOT SUBMITTED (start submit form)
 
-	$query = "SELECT CONCAT(mf, ' ',model) AS model,school,room,projector_id FROM manufacturers,models,schools,rooms,projectors WHERE projector_id=$id AND projectors.model_id=models.model_id AND models.mf_id=manufacturers.mf_id AND schools.school_id=projectors.school_id AND projectors.room_id=rooms.room_id ORDER BY rooms.room_id";
+	$query = "SELECT CONCAT(mf, ' ',model) AS model,school,room_name,projector_id FROM manufacturers,projector_models,schools,room_names,locations,projectors WHERE projector_id=$id AND projectors.model_id=projector_models.model_id AND projector_models.mf_id=manufacturers.mf_id AND locations.location_id=projectors.location_id AND schools.school_id=locations.school_id AND room_names.room_name_id=locations.room_name_id ORDER BY room_names.room_name";
 
 	$result = @mysql_query($query);
 

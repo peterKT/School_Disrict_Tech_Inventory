@@ -22,7 +22,7 @@ include ('../includes/footer.html');
 exit();
 }
 
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 
@@ -64,8 +64,8 @@ $query3 = "UPDATE smartboards SET screen_id=$model WHERE board_id=$id";
 			echo '<p>The screen type information has been edited.</p>
 				<p><br /><br /></p>';
 
-	$body = "Screen type information for projector with ID '$id' has been edited.  The new screen ID is '$model' \n\n" ;
-	mail ('ptitus@localhost', 'Change in projectorss database', $body, 'From: edit_screems.php');
+	$body = "Screen type information for screen with ID '$id' has been edited.  The new screen ID is '$model' \n\n" ;
+	mail ('ptitus@localhost', 'Changed Screen', $body, 'From: edit_screems.php');
 			} else {
 			
 			echo '<h1 id="mainhead">System Error</h1>
@@ -90,7 +90,7 @@ elseif ( $change_mount == "yes" ) {
 
 $mount = $_POST['mount_change'] ;
 
-$query3 = "UPDATE smartboards SET screen_id=$mount WHERE board_id=$id";
+$query3 = "UPDATE smartboards SET mount_id=$mount WHERE board_id=$id";
 	$result3 = @mysql_query($query3);
 		if (mysql_affected_rows() == 1) {
 			echo '<p>The mount information has been edited.</p>
@@ -128,8 +128,8 @@ $query4 = "UPDATE smartboards SET serial_no='$serial' WHERE board_id=$id";
 			echo '<p>The serial number information has been edited.</p>
 				<p><br /><br /></p>';
 
-	$body = "Serial number information for projector with ID '$id' has been edited.  The new serial number is '$serial' \n\n" ;
-	mail ('ptitus@localhost', 'Change in projectors database', $body, 'From: edit_screems.php');
+	$body = "Serial number information for screen with ID '$id' has been edited.  The new serial number is '$serial' \n\n" ;
+	mail ('ptitus@localhost', 'Changed Screen Info', $body, 'From: edit_screems.php');
 				} else {
 			
 			echo '<h1 id="mainhead">System Error</h1>
@@ -161,14 +161,13 @@ exit();
 			include ('../includes/footer.html');
 			exit();
 			}				//CLOSE IF ERRORS
-
-							
+					
 }
 							//CLOSE SUBMITTED
 
 //OPEN UPDATE SCREEN TYPE
 
-$query = "SELECT board_id,smartboards.screen_id,screen,school,room,mount_id FROM smartboards,screens,schools,rooms WHERE board_id=$id AND smartboards.screen_id=screens.screen_id AND smartboards.school_id=schools.school_id AND smartboards.room_id=rooms.room_id" ;
+$query = "SELECT board_id,smartboards.screen_id,screen,school,room_name,mount_id FROM smartboards,screens,locations,schools,room_names WHERE smartboards.board_id=$id AND smartboards.screen_id=screens.screen_id AND locations.location_id=smartboards.location_id AND schools.school_id=locations.school_id AND room_names.room_name_id=locations.room_name_id" ;
 
 	$result = mysql_query($query);
 	if (mysql_num_rows($result) == 1 ) {
@@ -295,17 +294,7 @@ mysql_close();
 exit();
  }
 
-
-
-
-
-
-
-
-
-
 //END UPDATE SERIAL NUMBER SUBMIT
-
 
 echo '	<p><input type="submit" name="submit" value="Submit"
 		/></p>

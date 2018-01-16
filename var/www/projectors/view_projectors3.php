@@ -22,7 +22,8 @@ $school_id = $_POST['schools'] ;
 echo '<p>School ID is ' . $school_id . '</p>';
 
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,school,room_name,projector_id FROM manufacturers,projector_models,schools,room_names,locations,projectors WHERE projectors.model_id=projector_models.model_id AND projector_models.mf_id=manufacturers.mf_id AND projectors.location_id=locations.location_id AND locations.school_id=schools.school_id and schools.school_id=$school_id AND locations.room_name_id=room_names.room_name_id ORDER BY $order_by";
+$query = "SELECT CONCAT(mf, ' ',model) AS model,school,room_name,projector_id FROM manufacturers,models,schools,room_names,locations,projectors WHERE projectors.school_id=$school_id AND schools.school_id=$school_id AND projectors.model_id=models.model_id AND models.mf_id=manufacturers.mf_id AND projectors.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id ORDER BY $order_by";
+
 
 $result = mysql_query($query);
 //$row = mysql_fetch_array($result,MYSQL_ASSOC);

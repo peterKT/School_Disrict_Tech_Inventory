@@ -3,7 +3,6 @@
 $page_title = 'View projectors, Smartboards/screens';
 //from VIEW ENTIRE PROJECTOR INVENTORY option on header. Select radio buttons by model or school
 include ('../includes/header_projectors.html');
-#echo '<h1 id="mainhead">Printers</h1>';
 ?>
 
 
@@ -11,8 +10,8 @@ include ('../includes/header_projectors.html');
 <?php
 
 if (isset($_POST['submit'])) {					//OPEN SUBMIT
-
-  require_once ('../../mysql_connect_projectors.php');
+								//Submit form is below
+  require_once ('../../mysql_connect_inventory.php');
 
 
 if ( !isset($_POST['search'])  ){
@@ -25,16 +24,14 @@ $search = $_POST['search'] ;
 
 if ($search=='M'   ) {
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room from manufacturers,models,projectors,smartboards,screens,schools,rooms where projectors.model_id=models.model_id and models.mf_id=manufacturers.mf_id and projectors.model_id=models.model_id and projectors.school_id=schools.school_id AND schools.school_id=smartboards.school_id and projectors.room_id=rooms.room_id AND rooms.room_id=smartboards.room_id AND smartboards.screen_id=screens.screen_id order by model,school" ;
-
+$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room_name from manufacturers,projector_models,projectors,smartboards,screens,schools,room_names,locations where projector_models.mf_id=manufacturers.mf_id AND projectors.model_id=projector_models.model_id AND projectors.location_id=smartboards.location_id AND screens.screen_id=smartboards.screen_id AND projectors.location_id=locations.location_id AND locations.school_id=schools.school_id AND room_names.room_name_id=locations.room_name_id order by model,school" ;
 
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
 
 if ($result) {
-  echo '<h1 align="center">Clarkstown Projector and Smartboard Inventory</h1>';
-  echo '<h2 align="center">Reporting Schools: South H.S., Festa, Laurel Plains, New City, Strawtown, West Nyack</h2>';
+  echo '<h1 align="center">Projector and Smartboard Inventory</h1>';
   echo "<h3 align=\"center\">Total installations = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   <td align="left"><b>Projector Model</b></td>
@@ -51,7 +48,7 @@ if ($result) {
 
   <td align="left">' . $row['school'] . '</td>
 
-  <td align="left">' . $row['room'] . '</td>
+  <td align="left">' . $row['room_name'] . '</td>
 
  </tr>';
 }
@@ -71,18 +68,16 @@ exit();
  }
 
 
-
 elseif ($search=='B'   ) {
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room from manufacturers,models,projectors,smartboards,screens,schools,rooms where projectors.model_id=models.model_id and models.mf_id=manufacturers.mf_id and projectors.model_id=models.model_id and projectors.school_id=schools.school_id AND schools.school_id=smartboards.school_id and projectors.room_id=rooms.room_id AND rooms.room_id=smartboards.room_id AND smartboards.screen_id=screens.screen_id order by screen,school" ;
+$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room_name from manufacturers,projector_models,projectors,smartboards,screens,schools,room_names,locations where projector_models.mf_id=manufacturers.mf_id AND projectors.model_id=projector_models.model_id AND projectors.location_id=smartboards.location_id AND screens.screen_id=smartboards.screen_id AND projectors.location_id=locations.location_id AND locations.school_id=schools.school_id AND room_names.room_name_id=locations.room_name_id order by screen,school" ;
+
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
 
 if ($result) {
-  echo '<h1 align="center">Clarkstown Projector and Smartboard Inventory</h1>';
-  echo '<h2 align="center">Reporting Schools: Bardonia, Birchwood, South H.S., Festa, 
-Laurel Plains, New City, Strawtown, West Nyack</h2>';
+  echo '<h1 align="center">Projector and Smartboard Inventory</h1>';
   echo "<h3 align=\"center\">Total installations = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   
@@ -100,7 +95,7 @@ Laurel Plains, New City, Strawtown, West Nyack</h2>';
 
   <td align="left">' . $row['school'] . '</td>
 
-  <td align="left">' . $row['room'] . '</td>
+  <td align="left">' . $row['room_name'] . '</td>
 
  </tr>';
 }
@@ -118,29 +113,15 @@ We apologize for any inconvenience.</p>';
 mysql_close();  
 exit();
  }
-
-
-
-
-
-
-
-
-
-
-
 else if ($search=='S'   ) {
 
-$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room from manufacturers,models,projectors,smartboards,screens,schools,rooms where projectors.model_id=models.model_id and models.mf_id=manufacturers.mf_id and projectors.model_id=models.model_id and projectors.school_id=schools.school_id AND schools.school_id=smartboards.school_id and projectors.room_id=rooms.room_id AND rooms.room_id=smartboards.room_id AND smartboards.screen_id=screens.screen_id order by school,screen" ;
-
-
+$query = "SELECT CONCAT(mf, ' ',model) AS model,screen,school,room_name from manufacturers,projector_models,projectors,smartboards,screens,schools,room_names,locations where projector_models.mf_id=manufacturers.mf_id AND projectors.model_id=projector_models.model_id AND projectors.location_id=smartboards.location_id AND screens.screen_id=smartboards.screen_id AND projectors.location_id=locations.location_id AND locations.school_id=schools.school_id AND room_names.room_name_id=locations.room_name_id order by school,screen" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
 
 if ($result) {
-  echo '<h1 align="center">Clarkstown Projector and Smartboard Inventory</h1>';
-  echo '<h2 align="center">Reporting Schools: South H.S., Festa, New City, Strawtown</h2>';
+  echo '<h1 align="center">Projector and Smartboard Inventory</h1>';
   echo "<h3 align=\"center\">Total installations = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   <td align="left"><b>School</b></td>
@@ -154,7 +135,7 @@ if ($result) {
   echo '<tr><td align="left">' . $row['school'] . '</td>
   <td align="left">' . $row['model'] . '</td>
   <td align="left">' . $row['screen'] . '</td>
-  <td align="left">' . $row['room'] . '</td>
+  <td align="left">' . $row['room_name'] . '</td>
 
 </tr>';
 }
@@ -172,9 +153,6 @@ mysql_close();
 exit();
  }
 
-
-
-
 }  //CLOSE THE SUBMIT
 
 ?>
@@ -183,7 +161,7 @@ exit();
 <form action="view_projectors.php" method="post">
 
 <h1 id="mainhead" align="center">Projector and Smartboard Inventory</h1>;
-<fieldset><legend>View projector and screen inventory for Clarkstown School District</legend>
+<fieldset><legend>View projector and screen inventory for all locations</legend>
 
 <p>Sort by: <input type="radio" name="search" value="M" />Projector Model 
 

@@ -12,7 +12,7 @@ include ('../includes/header_projectors.html');
 
 <?php
 
-  require_once ('../../mysql_connect_projectors.php');
+  require_once ('../../mysql_connect_inventory.php');
 $query = "select school_id,school from schools order by school" ;
 
 $result = @mysql_query($query);
@@ -24,7 +24,6 @@ if ($result) {
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
   	echo '<option value="' . $row['school_id'] . '">' . ' ' . $row['school'] .  '</option>\\n';
 
-//	echo '<option value="' . $row['printer_id'] . '">' . '  ' . $row['type'] .  $row['model'] .   '</option>\\n';
 
   	}  echo '</select>'; 
 	
@@ -44,7 +43,7 @@ exit();
 
 ?>
 <p>Sort by: <input type="radio" name="sort" value="screen" />Model 
-<input type="radio" name="sort" value="room" />Room
+<input type="radio" name="sort" value="room_name" />Room
 
 </fieldset>
 <div align="center"><input type="submit" name="submit" value="Submit 

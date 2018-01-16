@@ -12,7 +12,7 @@ include ('../includes/header_projectors.html');
 
 <?php
 
-require_once ('../../mysql_connect_projectors.php');
+require_once ('../../mysql_connect_inventory.php');
 $query = "select school_id,school from schools order by school" ;
 
 $result = @mysql_query($query);
@@ -47,7 +47,7 @@ exit();
 
 ?>
 <p>Sort by: <input type="radio" name="sort" value="model" />Model 
-<input type="radio" name="sort" value="room" />Room
+<input type="radio" name="sort" value="room_name" />Room
 
 </fieldset>
 <div align="center"><input type="submit" name="submit" value="Submit 
