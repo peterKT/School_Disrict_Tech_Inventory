@@ -1,1 +1,5 @@
-This copy of "inventory" will serve as a stage for the update from 2016.
+The plan for this repository is to present the HTML/PHP pages used to fashion a simple inventory system for a school district's technology equipment. Inventory management involves different sorts of items (computers, printers, projectors), different attributes of those items (model numbers, item types, i.e. laserjet printer, inkjet printer, etc.), locations (buildings, rooms inside buildings), and other features. Of course, that means bringing in a backend database to hold all this information.
+
+So, while the Web pages to be included here create a site that works well and has proven very useful, it is immediately apparent that the code is completely meaningless in the absence of the MySQL databases that hold the information referenced or manipulated by the many PHP queries.
+
+So the Wiki describes the required MySQL database along with suggestions for populating the tables with currently maintained data. The pages for managing computers (and computer-like devices), projectors and smartboards are complete and ready to use. The printer-specific pages need a bit of updating first and will be posted later (it is January 2018 right now). Otherwise everything is pretty much ready to use.
