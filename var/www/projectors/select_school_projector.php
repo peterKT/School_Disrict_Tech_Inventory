@@ -1,23 +1,19 @@
 
 <?php
 $page_title = 'Select a School';
-//2018a
-
-include ('../../includes/header_district_computers.html');
+//from Add a Projector option on header. When school is selected, school_id goes to add_projector.php
+include ('../includes/header_projectors.html');
 
 ?>
-<h2>Select a building to view inventory</h2>
 
-<form action="district_view_computers.php" method="post">
+<form action="add_projector.php" method="post">
 <fieldset><legend>Select a School</legend>
 
 
 <?php
 
-require_once ('../../../mysql_connect_inventory.php');
-
-
-$query = "select school_id,school from schools where school_id != 24 order by school" ;
+require_once ('../../mysql_connect_projectors.php');
+$query = "select school_id,school from schools where school_id != 4 order by school" ;
 
 $result = @mysql_query($query);
 
@@ -33,7 +29,7 @@ if ($result) {
 mysql_free_result ($result);
 
 } else {
-  echo '<p class="error">The schools could not be retrieved. 
+  echo '<p class="error">The models could not be retrieved. 
 We apologize for any inconvenience.</p>';
 
   echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
@@ -44,12 +40,20 @@ exit();
  }
 
 
+
+
+
+
+
 ?>
 
 </fieldset>
-<div align="center"><input type="submit" name="submit" value="Submit 
-School Selection" /></div>
+<div align="center"><input type="submit" name="submit" value="Submit School Selection" /></div>
 </form>
+
+
+
+
 </body>
 </html>
 

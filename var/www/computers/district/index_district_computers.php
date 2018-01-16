@@ -1,5 +1,7 @@
 
 <?php
+//2018a
+
 $page_title = 'View District Computer Inventory';
 //from VIEW ENTIRE COMPUTER INVENTORY option on header. Select radio buttons by model or school
 include ('../../includes/header_district_computers.html');
@@ -12,10 +14,7 @@ include ('../../includes/header_district_computers.html');
 
 if (isset($_POST['submit'])) {					//OPEN SUBMIT
 
-  require_once ('../../../mysql_connect_computers.php');
-
-
-
+require_once ('../../../mysql_connect_inventory.php');
 
 if ( !isset($_POST['search'])  ){
 	
@@ -29,16 +28,16 @@ $search = $_POST['search'] ;
 
 if ($search=='M'   ) {
 
-$query = "SELECT model, computer_type, service_tag, school FROM
-computer_models,computer_types,computers,schools WHERE computers.model_id=computer_models.model_id AND computer_types.ct_id = computer_models.ct_id AND computers.school_id=schools.school_id ORDER BY model" ;
+$query = "SELECT mf, model, computer_type, service_tag, school FROM manufacturers,computer_models,computer_types,computers,locations,schools WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.school_id=schools.school_id ORDER BY model" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
 
 if ($result) {
-  echo '<h1 align="center">District Computer Inventory</h1>';
-  echo "<h3 align=\"center\">Total computers = $num</h3>";
-  echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
+  echo '<h1 align="left">District Computer Inventory</h1>';
+  echo "<h3 align=\"left\">Total computers = $num</h3>";
+  echo '<table align="left" cellspacing="0" cellpadding="3"><tr>
+  <td align="left"><b>Make</b></td>
   <td align="left"><b>Model</b></td>
   <td align="left"><b>Type</b></td>
   <td align="left"><b>Service Tag</b></td>
@@ -46,7 +45,9 @@ if ($result) {
 </tr>';
 
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  echo '<tr><td align="left">' . $row['model'] . '</td>
+  echo '<tr><td align="left">' . $row['mf'] . '</td>
+  
+  <td align="left">' . $row['model'] . '</td>
 
   <td align="left">' . $row['computer_type'] . '</td>
 
@@ -74,8 +75,7 @@ exit();
 
 elseif ($search=='T'   ) {
 
-$query = "SELECT model, computer_type, service_tag, school FROM
-computer_models,computer_types,computers,schools WHERE computers.model_id=computer_models.model_id AND computer_types.ct_id = computer_models.ct_id AND computers.school_id=schools.school_id ORDER BY computer_type" ;
+$query = "SELECT computer_name,mf, model, computer_type, service_tag, school FROM manufacturers,computer_models,computer_types,computers,locations,schools WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.school_id=schools.school_id ORDER BY computer_type" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -84,6 +84,7 @@ if ($result) {
   echo '<h1 align="center">District Computer Inventory</h1>';
   echo "<h3 align=\"center\">Total computers = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
+  <td align="left"><b>Make</b></td>
   <td align="left"><b>Model</b></td>
   <td align="left"><b>Type</b></td>
   <td align="left"><b>Service Tag</b></td>
@@ -91,7 +92,9 @@ if ($result) {
 </tr>';
 
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  echo '<tr><td align="left">' . $row['model'] . '</td>
+  echo '<tr><td align="left">' . $row['mf'] . '</td>
+
+  <td align="left">' . $row['model'] . '</td>
 
   <td align="left">' . $row['computer_type'] . '</td>
 
@@ -121,8 +124,7 @@ exit();
 else if ($search=='S'   ) {
 
 
-$query = "SELECT model, computer_type, service_tag, school FROM
-computer_models,computer_types,computers,schools WHERE computers.model_id=computer_models.model_id AND computer_types.ct_id = computer_models.ct_id AND computers.school_id=schools.school_id ORDER BY school,model" ;
+$query = "SELECT computer_name,mf, model, computer_type, service_tag, school FROM manufacturers,computer_models,computer_types,computers,locations,schools WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.school_id=schools.school_id ORDER BY school,model" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -131,6 +133,7 @@ if ($result) {
   echo '<h1 align="center">District Computer Inventory</h1>';
   echo "<h3 align=\"center\">Total computers = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
+  <td align="left"><b>Make</b></td>
   <td align="left"><b>Model</b></td>
   <td align="left"><b>Type</b></td>
   <td align="left"><b>Service Tag</b></td>
@@ -138,8 +141,8 @@ if ($result) {
 </tr>';
 
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  echo '<tr><td align="left">' . $row['model'] . '</td>
-
+  echo '<tr><td align="left">' . $row['mf'] . '</td>
+  <td align="left">' . $row['model'] . '</td>
   <td align="left">' . $row['computer_type'] . '</td>
 
   <td align="left">' . $row['service_tag'] . '</td>
@@ -169,8 +172,7 @@ exit();
 else if ($search=='N'   ) {
 
 
-$query = "SELECT model, computer_type, service_tag, school FROM
-computer_models,computer_types,computers,schools WHERE computers.model_id=computer_models.model_id AND computer_types.ct_id = computer_models.ct_id AND computers.school_id=schools.school_id ORDER BY service_tag" ;
+$query = "SELECT computer_name,mf, model, computer_type, service_tag, school FROM manufacturers,computer_models,computer_types,computers,locations,schools WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.school_id=schools.school_id ORDER BY service_tag" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -179,6 +181,7 @@ if ($result) {
   echo '<h1 align="center">District Computer Inventory</h1>';
   echo "<h3 align=\"center\">Total computers = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
+  <td align="left"><b>Make</b></td>
   <td align="left"><b>Model</b></td>
   <td align="left"><b>Type</b></td>
   <td align="left"><b>Service Tag</b></td>
@@ -186,8 +189,8 @@ if ($result) {
 </tr>';
 
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-  echo '<tr><td align="left">' . $row['model'] . '</td>
-
+  echo '<tr><td align="left">' . $row['mf'] . '</td>
+  <td align="left">' . $row['model'] . '</td>
   <td align="left">' . $row['computer_type'] . '</td>
 
   <td align="left">' . $row['service_tag'] . '</td>
@@ -212,7 +215,6 @@ exit();
 
  }
 
-
 }  //CLOSE THE SUBMIT
 include ('../../includes/footer.html');
 ?>
@@ -220,15 +222,15 @@ include ('../../includes/footer.html');
 <center>
 <form action="index_district_computers.php" method="post">
 &nbsp;
-<h1 id="mainhead">District Computer Inventory</h1>
-<h3>Reporting Schools: South, Bardonia, Chestnut Grove, Laurel Plains, New City, Strawtown, West Nyack. <br />Also, iPads only: Woodglen, Link</h3>
-<fieldset style="width:500px"><legend>View computer inventory for Clarkstown School District</legend>
+<h1 id="mainhead">All Computer Inventory</h1>
+
+<fieldset style="width:500px"><legend>View computer inventory for all Locations</legend>
 
 <p>Sort by: <input type="radio" name="search" value="M" />Computer Model 
 
 <input type="radio" name="search" value="T" />Computer Type
 
-<input type="radio" name="search" value="S" />School
+<input type="radio" name="search" value="S" />Building
 
 <input type="radio" name="search" value="N" />Serial Number
 </p>

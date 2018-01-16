@@ -1,23 +1,27 @@
 
 <?php
 $page_title = 'Select a School';
-//2018a
 
-include ('../../includes/header_district_computers.html');
+//From header link to edit printer and cartridge inventory by school
+
+//Uses edit_locations to change printer info
+//Uses update inventory to change cartrdige info
+
+include('../includes/header_district_printers.html');
 
 ?>
 <h2>Select a building to view and manage inventory</h2>
 
-<form action="district_view_computers2.php" method="post">
+<form action="district_add_new.php" method="post">
 <fieldset><legend>Select a School</legend>
 
 
 <?php
 
-require_once ('../../../mysql_connect_inventory.php');
+require_once ('../../mysql_connect_district_printers.php');
 
 
-$query = "select school_id,school from schools where school_id != 24 order by school" ;
+$query = "select school_id,school from schools where school_id != 23 order by school" ;
 
 $result = @mysql_query($query);
 
@@ -44,10 +48,11 @@ exit();
  }
 
 
-
-
-
-
+echo '<br><br /><br /><p>In this building I want to add : 
+ 
+<br /><input type="radio" name="view" value="printers" />Printers 
+<br /><input type="radio" name="view" value="cart" />Cartridges
+</p>' ;
 
 ?>
 

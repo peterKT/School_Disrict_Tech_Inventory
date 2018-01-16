@@ -1,5 +1,5 @@
 <?php # district_view_computers2.php
-
+//2018a
 
 $page_title = 'Edit Computers by School';
 
@@ -18,7 +18,7 @@ include ('../../includes/header_district_computers2.php');
   	exit();
 	}
 
-require_once ('../../../mysql_connect_computers.php');
+require_once ('../../../mysql_connect_inventory.php');
 
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
 
@@ -36,7 +36,6 @@ echo "<h1 id=\"mainhead\" align=\"center\">$school Computer Inventory</h1>";
 echo "<h3 align=\"center\">Edit computers assigned to rooms</h3>";
 
 
-//  require_once ('../../mysql_connect_computers.php');
 $display = 200 ;
 
 if (isset($_GET['np']) ) {
@@ -78,12 +77,12 @@ $link4 = "{$_SERVER['PHP_SELF']}?sort=staga&schools=$school_id";
 if (isset($_GET['sort']) ) {
 	switch ($_GET['sort']) {
 		case 'rooma':
-		$order_by = 'room ASC';
+		$order_by = 'room_name ASC';
 		$link1="{$_SERVER['PHP_SELF']}?sort=roomd&schools=$school_id";
 		break;
 
 		case 'roomd':
-		$order_by = 'room DESC';
+		$order_by = 'room_name DESC';
 		$link1="{$_SERVER['PHP_SELF']}?sort=rooma&schools=$school_id";
 		break;
 
@@ -120,7 +119,7 @@ if (isset($_GET['sort']) ) {
 
 
 		default :
-		$order_by = 'room ASC';
+		$order_by = 'room_name ASC';
 		break;
 
 		}
@@ -131,8 +130,7 @@ if (isset($_GET['sort']) ) {
 	$sort = "stagd&schools=$school_id";
 }
 
-$query = "SELECT room, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag,asset_tag FROM rooms, computer_models, computer_types, computers WHERE rooms.room_id=computers.room_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.teacher_id = 143 AND computers.school_id=$school_id ORDER BY $order_by LIMIT $start,$display";
-
+$query = "SELECT room_name, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM room_names,locations, computer_models, computer_types, computers WHERE computers.location_id=locations.location_id AND locations.school_id=$school_id AND room_names.room_name_id=locations.room_name_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.teacher_id = 143 ORDER BY $order_by LIMIT $start,$display";
 
 $result = @mysql_query($query);
 
@@ -179,7 +177,7 @@ $bg = '#eeeeee';
 -->
 
 
-  <td align="left">' . $row['room'] . '</td>
+  <td align="left">' . $row['room_name'] . '</td>
   <td align="left" style="white-space: nowrap">' . $row['model'] . '</td>	
   <td align="left">' . $row['computer_name'] . '</td>
   <td align="left">' . $row['service_tag'] . '</td>

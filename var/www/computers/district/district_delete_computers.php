@@ -1,5 +1,5 @@
 <?php #  - district_delete_computers.php
-
+//2018a
 //accessed through district_view_computer2.php
 
 $page_title = 'Delete Computer';
@@ -34,7 +34,7 @@ exit();
 
 */
 
-require_once ('../../../mysql_connect_computers.php');
+require_once ('../../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 	if ($_POST['sure'] == 'Yes' ) {					//START CONDITION 1

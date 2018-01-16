@@ -1,23 +1,19 @@
 
 <?php
 $page_title = 'Select a School';
-//2018a
-
-include ('../../includes/header_district_computers.html');
+//from Add a Screen option on header. When school is selected, school_id goes to add_screen.php
+include ('../includes/header_projectors.html');
 
 ?>
-<h2>Select a building to view inventory</h2>
 
-<form action="district_view_computers.php" method="post">
+<form action="add_screen.php" method="post">
 <fieldset><legend>Select a School</legend>
 
 
 <?php
 
-require_once ('../../../mysql_connect_inventory.php');
-
-
-$query = "select school_id,school from schools where school_id != 24 order by school" ;
+require_once ('../../mysql_connect_inventory.php');
+$query = "select school_id,school from schools order by school" ;
 
 $result = @mysql_query($query);
 
@@ -44,13 +40,23 @@ exit();
  }
 
 
+
+
+
+
+
 ?>
 
 </fieldset>
-<div align="center"><input type="submit" name="submit" value="Submit 
-School Selection" /></div>
+<div align="center"><input type="submit" name="submit" value="Submit School Selection" /></div>
 </form>
-</body>
-</html>
+
+
+<?php
+
+
+
+include ('../includes/footer.html');
+?>
 
 
