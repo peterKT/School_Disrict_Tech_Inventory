@@ -18,9 +18,9 @@ $room = $_POST['room'];
 $add_id = $_POST['printer'];
 
 
-require_once('../../mysql_connect_district_printers.php');		
+require_once('../../mysql_connect_inventory.php');		
 
-	$query = "INSERT INTO district_printers(printer_model_id,location_id) VALUES( $add_id, $location_id)";
+	$query = "INSERT INTO printers(printer_model_id,location_id) VALUES( $add_id, $location_id)";
 	$result = @mysql_query($query);
 		if (mysql_affected_rows() == 1) {		//START CONDITION 2
 			echo '<h1 id="mainhead">Add a Printer</h1>
@@ -30,7 +30,7 @@ require_once('../../mysql_connect_district_printers.php');
 //$body = "The printer in '$remove_room' --'$remove_printer' -- has been removed .\n\n" ;
 
 $body = "A new printer with ID number '$add_id' has been added to '$room' in location ID '$location_id'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in district_printers database', $body, 'From: district_add_printer.php') ;
+	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_printer.php') ;
 
 
 		} else  {
@@ -59,9 +59,9 @@ echo '<p>school is '. $school .'</p>' ;
 echo '<form action="district_add_printer.php" method="post">
 <fieldset><legend>Select the printer you wish to add to room ' . $room . '</legend>' ;
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
-$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM district_printer_models, district_printer_types WHERE district_printer_models.pt_id=district_printer_types.pt_id ORDER BY printer_no";
+$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM printer_models, printer_types WHERE printer_models.pt_id=printer_types.pt_id ORDER BY printer_no";
 
 $result = @mysql_query($query);
 

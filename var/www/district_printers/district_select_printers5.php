@@ -10,9 +10,9 @@ include('../includes/header_district_printers.html');
 <fieldset><legend>Pick a Printer</legend>
 
 <?php
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
-$query = "SELECT printer_model_id,CONCAT(type,' ',printer_no) AS model FROM district_printer_types, district_printer_models WHERE district_printer_types.pt_id = district_printer_models.pt_id order by printer_no";
+$query = "SELECT printer_model_id,CONCAT(type,' ',printer_no) AS model FROM printer_types, printer_models WHERE printer_types.pt_id = printer_models.pt_id order by printer_no";
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -45,11 +45,7 @@ echo '</fieldset>
 
 ?>
 
-
-
-
 <?php
-
 
 //DEFINE FUNCTION
 
@@ -66,13 +62,10 @@ function get_info($printer_id) {
 
 		while ($row = mysql_fetch_array($result, MYSQL_ASSOC) ) { 	
 			echo '<tr><td align="left"><a href=district_toner_correction.php?mid=' . $row['mid'] . '&printer_id=' . $printer_id . '>Edit</a></td><td align "left">' . $row['toner'] . '</td></tr>';
-
-
 }
   echo '</table>';
-				
 
-} 	       else { echo "<p>You goofed</p>"; }
+} else { echo "<p>You goofed</p>"; }
 
 
 }		//CLOSE FUNCTION		 
@@ -93,17 +86,8 @@ if (isset($_POST['printer_id']) ) {
 
 } //CLOSE THE SUBMIT
 
-
   	include ('../includes/footer_district.html');
 
-
-
-
-
 ?>
-
-
-
-
 
 

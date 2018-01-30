@@ -45,9 +45,9 @@ $location_id = $_POST['location'];
 $add_id = $_POST['printer'];
 echo "<p>The submitted location_id is $location_id and printer_model_id is $add_id </p>";
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
-$query = "SELECT CONCAT(type, ' ',printer_no) AS model, room_name, school FROM district_printer_models, district_printer_types,room_names,schools,locations WHERE printer_model_id = $add_id AND district_printer_models.pt_id=district_printer_types.pt_id AND locations.location_id = $location_id AND room_names.room_name_id=locations.room_name_id AND locations.school_id=schools.school_id" ;
+$query = "SELECT CONCAT(type, ' ',printer_no) AS model, room_name, school FROM printer_models, printer_types,room_names,schools,locations WHERE printer_model_id = $add_id AND printer_models.pt_id=printer_types.pt_id AND locations.location_id = $location_id AND room_names.room_name_id=locations.room_name_id AND locations.school_id=schools.school_id" ;
 
 $result = @mysql_query($query);
 if ($result) {
@@ -68,14 +68,14 @@ exit();
 	}
 
 
-//require_once('../../mysql_connect_district_printers.php');
+//require_once('../../mysql_connect_inventory.php');
 
-$query = "SELECT * FROM district_printers WHERE printer_model_id = $add_id AND location_id = $location_id";
+$query = "SELECT * FROM printers WHERE printer_model_id = $add_id AND location_id = $location_id";
 $result = mysql_query($query);
 	if (mysql_affected_rows() == 0 ) {	
 		
 
-	$query = "INSERT INTO district_printers(printer_model_id,location_id) VALUES ( $add_id , $location_id )";
+	$query = "INSERT INTO printers(printer_model_id,location_id) VALUES ( $add_id , $location_id )";
 	$result = @mysql_query($query);
 		if (mysql_affected_rows() == 1) {		//START CONDITION 2
 			echo '<h1 id="mainhead">Add a Printer</h1>
@@ -84,7 +84,7 @@ $result = mysql_query($query);
 
 
 $body = "A new printer with ID number '$add_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in district_printers database', $body, 'From: district_add_new.php') ;
+	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {
@@ -102,7 +102,7 @@ exit();
 	echo '<h1 id="mainhead">System Warning</h1>
 			<p class="error">Possible duplicate: same printer already exists in that location.</p>';
 			
-	$query = "INSERT INTO district_printers(printer_model_id,location_id) VALUES ( $add_id , $location_id )";
+	$query = "INSERT INTO printers(printer_model_id,location_id) VALUES ( $add_id , $location_id )";
 	$result = @mysql_query($query);
 		if (mysql_affected_rows() == 1) {		//START CONDITION 2
 			echo '<h1 id="mainhead">Add a Printer</h1>
@@ -111,7 +111,7 @@ exit();
 
 
 $body = "A new printer with ID number '$add_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in district_printers database', $body, 'From: district_add_new.php') ;
+	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {
@@ -137,7 +137,7 @@ $quantity = $_POST['ink_qty'];
 
 echo "<p>The submitted location_id is $location_id quantity is $quantity and toner_id is $toner_id </p>";
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
 
 $query = "SELECT toner_id, CONCAT (toner_no, ' ','(', toner_alias,')',' ',toner_color) AS toner  FROM toner,toner_color WHERE toner.toner_color_id=toner_color.toner_color_id ORDER BY toner" ;
@@ -163,7 +163,7 @@ exit();
 	}
 
 
-//require_once('../../mysql_connect_district_printers.php');
+//require_once('../../mysql_connect_inventory.php');
 
 $query = "SELECT * FROM toner_inventory WHERE toner_id = $toner_id AND location_id = $location_id";
 $result = mysql_query($query);
@@ -179,7 +179,7 @@ $result = mysql_query($query);
 
 
 $body = "A new toner with ID number '$toner_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in district_printers database', $body, 'From: district_add_new.php') ;
+	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {
@@ -208,7 +208,7 @@ exit();
 
 
 //Set up the school name
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
 
@@ -240,9 +240,9 @@ echo "<h2>Add Printer to  $school Inventory</h2>
 <h3>Select Printer Model</h3>
 <?php
 
-// ALREADY DONE (require_once('../../mysql_connect_district_printers.php');
+// ALREADY DONE (require_once('../../mysql_connect_inventory.php');
 
-$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM district_printer_models, district_printer_types WHERE district_printer_models.pt_id=district_printer_types.pt_id ORDER BY printer_no";
+$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM printer_models, printer_types WHERE printer_models.pt_id=printer_types.pt_id ORDER BY printer_no";
 
 $result = @mysql_query($query);
 

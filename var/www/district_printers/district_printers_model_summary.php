@@ -11,16 +11,15 @@ include('../includes/header_district_printers.html');
 ?>
 
 <!--Form for Type Summary  -->
-<h2>Reporting Schools: South, Laurel Plains, New City, Strawtown, West Nyack</h2>
 
 <form action="district_printers_model_summary.php" method="post">
-<fieldset><legend>Summarize district printer inventory by type</legend>
-<h2>Use this form to review district printer inventory by type.</h2>
+<fieldset><legend>Summarize printer inventory by type</legend>
+<h2>Use this form to review printer inventory by type.</h2>
 
 <?php
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
   
-$query1 = "SELECT type,pt_id FROM district_printer_types" ;
+$query1 = "SELECT type,pt_id FROM printer_types" ;
 
 $result1 = @mysql_query($query1);
 
@@ -69,7 +68,7 @@ $type_id = $_POST['search1'] ;
 echo '<p>Type ID is ' . $type_id . '</p>';
 
 
-$query4 = "SELECT type FROM district_printer_types,district_printer_models,district_printers WHERE district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printer_models.pt_id=district_printer_types.pt_id AND district_printer_types.pt_id='$type_id' ";
+$query4 = "SELECT type FROM printer_types, printer_models, printers WHERE printers.printer_model_id=printer_models.printer_model_id AND printer_models.pt_id=printer_types.pt_id AND printer_types.pt_id='$type_id' ";
 
 $result4 = @mysql_query($query4);
 $num4 = mysql_num_rows($result4);
@@ -108,10 +107,7 @@ exit();
 
 <?php
 
-//  require_once ('../../../mysql_connect_computers.php');
-
-
-$query2 = "SELECT printer_model_id, CONCAT(type,' ', printer_no) AS model FROM district_printer_types, district_printer_models WHERE district_printer_types.pt_id = district_printer_models.pt_id order by printer_no";
+$query2 = "SELECT printer_model_id, CONCAT(type,' ', printer_no) AS model FROM printer_types, printer_models WHERE printer_types.pt_id = printer_models.pt_id order by printer_no";
 
 
 
@@ -152,11 +148,6 @@ Info Request" /></div>
 
 if ($_POST['submit2']) {					//OPEN SUBMIT 2
 
-//  require_once ('../../../mysql_connect_computers.php');
-
-
-
-
 if ( isset($_POST['search2'])   ) {	
 
 $model_id = $_POST['search2'] ;
@@ -166,7 +157,7 @@ $model_id = $_POST['search2'] ;
 echo '<p>Model ID is ' . $model_id . '</p>';
 
 
-$query3 = "SELECT district_printer_models.printer_model_id, printer_no FROM district_printer_models,district_printers WHERE district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printers.printer_model_id='$model_id'";
+$query3 = "SELECT printer_models.printer_model_id, printer_no FROM printer_models, printers WHERE printers.printer_model_id=printer_models.printer_model_id AND printers.printer_model_id='$model_id'";
 
 $result3 = @mysql_query($query3);
 $num3 = mysql_num_rows($result3);

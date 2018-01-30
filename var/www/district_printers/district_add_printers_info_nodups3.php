@@ -44,10 +44,10 @@ if ( isset($_POST['cyan']) || isset($_POST['magenta']) || isset($_POST['yellow']
 if (empty($errors)) {						// START IF EMPTY ERRORS, MUST CLOSE
 
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 //CHECK FOR DUPLICATE PRINTER MODEL
 
-$query = "SELECT printer_model_id FROM district_printer_models WHERE printer_no='$mn'";
+$query = "SELECT printer_model_id FROM printer_models WHERE printer_no='$mn'";
 $result = mysql_query($query);
 if (mysql_num_rows($result)==0) {					// START NO DUPS, MUST CLOSE
 	
@@ -57,7 +57,7 @@ echo "<p>This printer is not a duplicate</p>";
 //Enter the printer model and its type
 
 
-  $query = "INSERT INTO district_printer_models (printer_no,pt_id) VALUES
+  $query = "INSERT INTO printer_models (printer_no,pt_id) VALUES
   ('$mn','$pt')";
 
 $result = mysql_query($query); 
@@ -92,7 +92,7 @@ echo "<p>Sorry, that printer is already in the database.</p>";
 
 
 if (isset($_POST['yes']) )	{
-	$query = "SELECT type FROM district_printer_types,district_printer_models WHERE district_printer_types.pt_id = district_printer_models.pt_id and district_printer_models.printer_no = '$mn'" ;
+	$query = "SELECT type FROM printer_types,printer_models WHERE printer_types.pt_id = printer_models.pt_id and printer_models.printer_no = '$mn'" ;
 	$result=mysql_query($query);
 	while ($row=mysql_fetch_array($result,MYSQL_ASSOC) ) {
 	echo '<h2>Add New Ink Cartridge Information</h2>

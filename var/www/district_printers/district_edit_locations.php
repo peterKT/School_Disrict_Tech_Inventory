@@ -33,9 +33,9 @@ echo '<p>printer to be removed from room '. $same_room . ' is ' . $old_model . '
 
 
 
-require_once('../../mysql_connect_district_printers.php');	//OPEN SUBMITTED
+require_once('../../mysql_connect_inventory.php');	//OPEN SUBMITTED
 	if ($_POST['sure'] == 'Yes' ) {					//START CONDITION 1
-		$query = "DELETE FROM district_printers WHERE printer_id = $remove_prid";
+		$query = "DELETE FROM printers WHERE printer_id = $remove_prid";
 		$result = @mysql_query($query);
 			if (mysql_affected_rows() == 1) {		//START CONDITION 2
 				echo '<h1 id="mainhead">Remove a Printer at ' . $same_school . '</h1>
@@ -43,7 +43,7 @@ require_once('../../mysql_connect_district_printers.php');	//OPEN SUBMITTED
 				<p><br /><br /></p>';
 
 $body = "The printer in '$same_room' --'$old_model' -- has been removed from ' . $same_school . ' .\n\n" ;
-	mail ('ptitus@localhost', 'Change in district_printers database', $body, 'From: district_edit_locations.php') ;
+	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_edit_locations.php') ;
 
 
 			} else  {
@@ -83,9 +83,9 @@ $new_printer = $_POST['new_printer'];
 
 
 
-require_once('../../mysql_connect_district_printers.php');		
+require_once('../../mysql_connect_inventory.php');		
 
-	$query = "UPDATE district_printers SET printer_model_id=$new_printer WHERE printer_id=$replace_prid";
+	$query = "UPDATE printers SET printer_model_id=$new_printer WHERE printer_id=$replace_prid";
 	$result = @mysql_query($query);
 		if (mysql_affected_rows() == 1) {		//START CONDITION 2
 			echo '<h1 id="mainhead">Replace a Printer at ' . $same_school . '</h1>
@@ -127,13 +127,13 @@ echo '<form action="district_edit_locations.php" method="post">
 <fieldset><legend>Select a replacement printer for the ' .  $old_model . ' in location ' . $same_room . '</legend>' ;
 
 //OK Up to Here 11/20
-//Form needs to send printer ID and new model ID so the old model ID can be replaced in the district_printers table.
+//Form needs to send printer ID and new model ID so the old model ID can be replaced in the printers table.
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
 
 
-$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM district_printer_models, district_printer_types WHERE district_printer_models.pt_id=district_printer_types.pt_id ORDER BY printer_no";
+$query = "SELECT printer_model_id, CONCAT(type, ' ',printer_no) AS model FROM printer_models, printer_types WHERE printer_models.pt_id=printer_types.pt_id ORDER BY printer_no";
 
 
 $result = @mysql_query($query);
@@ -195,11 +195,11 @@ echo '<p>old printer is ' . $old_model .'</p>';
 
 
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
 
 
-	$query = "SELECT * from district_printers where printer_id = $remove_prid ";
+	$query = "SELECT * from printers where printer_id = $remove_prid ";
 
 	$result = @mysql_query($query);
 

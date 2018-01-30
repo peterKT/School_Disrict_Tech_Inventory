@@ -8,7 +8,6 @@ if ($_POST['submit']) {					//OPEN SUBMIT
 $page_title = 'View district printers or ink by school';
 
 include ('../includes/header_district_printers.html');
-
 //Do some probably unnecessary validation
   
   if ( !isset($_POST['schools']) ) {
@@ -22,13 +21,7 @@ include ('../includes/header_district_printers.html');
 
 $view = $_POST['view'] ;
 
-//Don't forget the hidden inputs
-
-//$school = $_POST['school'] ;
-
-
-
-require_once ('../../mysql_connect_district_printers.php');
+require_once ('../../mysql_connect_inventory.php');
 
 
 
@@ -77,9 +70,6 @@ Info Request" /></div>
 
 </form>' ;
 
-
-
-
 }
 
 elseif ($view == 'cart') {
@@ -93,11 +83,29 @@ echo"<fieldset><legend>View cartridge inventory for $school</legend>";
 $query = "SELECT toner_no, toner_color, room_name, school, quantity FROM toner, toner_color, room_names, schools, locations,toner_inventory WHERE toner_inventory.toner_id=toner.toner_id AND toner.toner_color_id=toner_color.toner_color_id AND toner_inventory.location_id=locations.location_id AND  room_names.room_name_id=locations.room_name_id AND schools.school_id=locations.school_id AND locations.school_id = '$school_id' ORDER BY toner_no";
 
 $result = @mysql_query($query);
-$num = mysql_num_rows($result);
+
 
 if ($result) {
+
+$result2 = mysql_query("SELECT IFNULL(SUM(quantity),0) AS total FROM toner_inventory, locations WHERE toner_inventory.location_id=locations.location_id AND locations.school_id = '$school_id'");
+$row = mysql_fetch_assoc($result2);
+$num2 = $row['total'];
+
+if ($result2) {
+//  echo "<h3 align=\"center\">Real total cartridges = $num2</h3>";
+  mysql_free_result ($result2);
+} else {
+  echo '<p class="error">The toner info could not be retrieved. 
+  We apologize for any inconvenience.</p>';
+
+  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
+  mysql_close();  
+  exit();
+
+}
+
   echo "<h1 align=\"center\">$school Toner Inventory</h1>";
-  echo "<h3 align=\"center\">Total cartridges = $num</h3>";
+  echo "<h3 align=\"center\">Total cartridges = $num2</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   <td align="left"><b>Cartridge Number</b></td>
   <td align="left"><b>Color</b></td>  
@@ -111,19 +119,17 @@ if ($result) {
   <td align="left">' . $row['toner_color'] . '</td>
   <td align="left">' . $row['room_name'] . '</td>  
   <td align="left">' . $row['quantity'] . '</td>  
-  
-  
+    
 </tr>';
 }
-  echo '</table>';
 
+echo '</table>';
 echo '</fieldset>';
 
-
-
 mysql_free_result ($result);
+
 } else {
-  echo '<p class="error">The printers could not be retrieved. 
+  echo '<p class="error">The toner info could not be retrieved. 
 We apologize for any inconvenience.</p>';
 
   echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
@@ -134,18 +140,11 @@ exit();
  }
 
 
-// ELSEIF none of the above 
-
-
 }
-
-
 
 //End of the submission form for receiving school ID and choosing printers or cart
 
-//Query district_printers based on information submitted in search preference form
-
-
+//Query printers based on information submitted in search preference form
 
 
 if ($_POST['submit2']) {
@@ -154,8 +153,7 @@ $page_title = 'View district printers by selected school';
 
 include ('../includes/header_district_printers.html');
 
-
-require_once ('../../mysql_connect_district_printers.php');
+require_once ('../../mysql_connect_inventory.php');
 
 if ( !isset($_POST['search'])  ){
 	
@@ -175,7 +173,7 @@ echo "The school ID is $school_id <br />";
 	
 	
 
-$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM district_printer_models, district_printer_types, room_names, schools, district_printers,locations WHERE district_printer_models.pt_id=district_printer_types.pt_id AND district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id and locations.school_id='$school_id' order by printers" ;
+$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM printer_models, printer_types, room_names, schools, printers, locations WHERE printer_models.pt_id=printer_types.pt_id AND printers.printer_model_id=printer_models.printer_model_id AND printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id and locations.school_id='$school_id' order by printers" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -222,7 +220,7 @@ echo "The school ID is $school_id <br />";
 	
 	
 
-$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM district_printer_models, district_printer_types, room_names, schools, district_printers,locations WHERE district_printer_models.pt_id=district_printer_types.pt_id AND district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id and locations.school_id='$school_id' ORDER BY room_name" ;
+$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM printer_models, printer_types, room_names, schools, printers,locations WHERE printer_models.pt_id=printer_types.pt_id AND printers.printer_model_id=printer_models.printer_model_id AND printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id and locations.school_id='$school_id' ORDER BY room_name" ;
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
@@ -263,12 +261,7 @@ exit();
 }  //Close submission of search order preferences
 
 
-
-
-
 ?>
-
-
 
 </body>
 </html>

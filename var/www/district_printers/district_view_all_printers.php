@@ -21,7 +21,7 @@ Info Request" /></div>
 
 if ($_POST['submit']) {					//OPEN SUBMIT
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
 
 if (isset($_POST['school_sort']) ) {
 	$sort=$_POST['school_sort'];
@@ -34,7 +34,7 @@ elseif (isset($_POST['model_sort']) ) {
 
 if ($sort=='S'   ) {
 
-$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM district_printer_models, district_printer_types, room_names, schools, district_printers,locations WHERE district_printer_models.pt_id=district_printer_types.pt_id AND district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id order by school,room_name";
+$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM printer_models, printer_types, room_names, schools, printers,locations WHERE printer_models.pt_id=printer_types.pt_id AND printers.printer_model_id=printer_models.printer_model_id AND printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id order by school,room_name";
 
 
 $result = @mysql_query($query);
@@ -42,7 +42,6 @@ $num = mysql_num_rows($result);
 
 if ($result) {
   echo '<h1 align="center">District Printers</h1>';
-    echo '<h2 align="center">Reporting Schools: Strawtown, New City, West Nyack, Laurel Plains</h2>';
   echo "<h3 align=\"center\">Total printers in use = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   <td align="left"><b>Printer</b></td>
@@ -78,7 +77,7 @@ exit();
 
 if ($sort=='M'   ) {
 
-$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM district_printer_models, district_printer_types, room_names, schools, district_printers,locations WHERE district_printer_models.pt_id=district_printer_types.pt_id AND district_printers.printer_model_id=district_printer_models.printer_model_id AND district_printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id order by printers,school";
+$query = "SELECT CONCAT(type, ' ',printer_no) AS printers, room_name, school FROM printer_models, printer_types, room_names, schools, printers,locations WHERE printer_models.pt_id=printer_types.pt_id AND printers.printer_model_id=printer_models.printer_model_id AND printers.location_id=locations.location_id and locations.room_name_id=room_names.room_name_id AND locations.school_id=schools.school_id order by printers,school";
 
 
 $result = @mysql_query($query);
@@ -86,7 +85,6 @@ $num = mysql_num_rows($result);
 
 if ($result) {
   echo '<h1 align="center">Entire District Printers</h1>';
-      echo '<h2 align="center">Reporting Schools: Strawtown, New City, West Nyack, Laurel Plains</h2>';
   echo "<h3 align=\"center\">Total printers in use = $num</h3>";
   echo '<table align="center" cellspacing="0" cellpadding="5"><tr>
   <td align="left"><b>Printer</b></td>

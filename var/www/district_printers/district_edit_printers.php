@@ -15,7 +15,7 @@ if ($_POST['submit']) {					//Receive school_id from select_school2
 
 include ('../includes/header_district_printers.html');
 
-require_once('../../mysql_connect_district_printers.php');
+require_once('../../mysql_connect_inventory.php');
  
  
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
@@ -36,7 +36,8 @@ if ($view == 'printers') {
 	
 $page_title = 'Edit printer locations';
 
-$query2 = "SELECT room_name,location_id FROM room_names,locations WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id NOT IN (SELECT location_id FROM district_printers) AND room_names.room_name_id NOT IN (322,323,324,325,326,407) order by room_name" ;
+$query2 = "SELECT room_name,location_id FROM room_names,locations WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id NOT IN (SELECT location_id FROM printers) AND room_names.room_name_id NOT IN (5,122,123,112,168,255,348,662, 663,664,665,666,667,685,738, 958,1088,1093,1102, 1104,1090, 1111,1101,1087, 1157,1113,1120,1112,1149)  ORDER BY room_name" ;
+
 
 
 $result2 = @mysql_query($query2);
@@ -88,7 +89,7 @@ mysql_close();
 
 
 
-$query = "SELECT room_name, CONCAT(type, ' ',printer_no) AS model, printer_id FROM room_names,locations,district_printers,district_printer_types,district_printer_models WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id IN (SELECT location_id FROM district_printers) AND locations.location_id=district_printers.location_id AND district_printer_models.printer_model_id=district_printers.printer_model_id AND district_printer_types.pt_id=district_printer_models.pt_id order by room_name,model" ;
+$query = "SELECT room_name, CONCAT(type, ' ',printer_no) AS model, printer_id FROM room_names,locations,printers,printer_types,printer_models WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id IN (SELECT location_id FROM printers) AND locations.location_id=printers.location_id AND printer_models.printer_model_id=printers.printer_model_id AND printer_types.pt_id=printer_models.pt_id order by room_name,model" ;
 
 
 
