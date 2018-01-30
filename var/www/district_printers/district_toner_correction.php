@@ -69,7 +69,7 @@ echo '<p>The new toner ID and MID are '. $new_toner_id . ' and ' . $mid . '</p>'
 			<p><br /><br /></p>";
 			
 $body = "The printer_toner_matrix table has been updated and toner for '$printer_model' --'$old_toner' -- has been replaced with a new cartridge with ID '$new_toner_id' .\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers', $body, 'From: district_toner_correction.php') ;
+	mail ('user@localhost', 'Change in printers', $body, 'From: district_toner_correction.php') ;
 
 
 		} else  {

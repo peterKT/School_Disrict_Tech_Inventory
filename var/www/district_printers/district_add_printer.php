@@ -30,7 +30,7 @@ require_once('../../mysql_connect_inventory.php');
 //$body = "The printer in '$remove_room' --'$remove_printer' -- has been removed .\n\n" ;
 
 $body = "A new printer with ID number '$add_id' has been added to '$room' in location ID '$location_id'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_printer.php') ;
+	mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_printer.php') ;
 
 
 		} else  {

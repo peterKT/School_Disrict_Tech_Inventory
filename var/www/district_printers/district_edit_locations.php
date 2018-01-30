@@ -43,7 +43,7 @@ require_once('../../mysql_connect_inventory.php');	//OPEN SUBMITTED
 				<p><br /><br /></p>';
 
 $body = "The printer in '$same_room' --'$old_model' -- has been removed from ' . $same_school . ' .\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_edit_locations.php') ;
+	mail ('user@localhost', 'Change in printers database', $body, 'From: district_edit_locations.php') ;
 
 
 			} else  {
@@ -94,7 +94,7 @@ require_once('../../mysql_connect_inventory.php');
 			<p><br /><br /></p>";
 			
 $body = "The printer in '$same_room' --'$old_model' -- has been replaced with printer_model_id: '$new_printer' .\n\n" ;
-	mail ('ptitus@localhost', 'Change in district printers database', $body, 'From: district_edit_locations.php') ;
+	mail ('user@localhost', 'Change in district printers database', $body, 'From: district_edit_locations.php') ;
 
 
 		} else  {

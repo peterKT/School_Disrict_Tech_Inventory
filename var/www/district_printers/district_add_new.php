@@ -84,7 +84,7 @@ $result = mysql_query($query);
 
 
 $body = "A new printer with ID number '$add_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
+	mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {
@@ -111,7 +111,7 @@ exit();
 
 
 $body = "A new printer with ID number '$add_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
+	mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {
@@ -179,7 +179,7 @@ $result = mysql_query($query);
 
 
 $body = "A new toner with ID number '$toner_id' has been added to '$room_name' in  '$school'.\n\n" ;
-	mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
+	mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_new.php') ;
 
 
 		} else  {

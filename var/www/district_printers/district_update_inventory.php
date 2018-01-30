@@ -84,7 +84,7 @@ echo "<p>orig is $orig</p>";
 
 
 $body = "The quantity for cartridge '$cn' at $school in $room_name has been removed .\n\n" ;
-mail ('ptitus@localhost', 'Change in inventory database', $body, 'From: district_update_inventory.php') ;
+mail ('user@localhost', 'Change in inventory database', $body, 'From: district_update_inventory.php') ;
 
 include ('../includes/footer_district.html');
 mysql_close();
@@ -116,7 +116,7 @@ exit();
 
 
 $body = "The quantity for cartridge '$cn' at $school in $room_name has been changed from '$orig' to '$count' .\n\n" ;
-mail ('ptitus@localhost', 'Change in inventory', $body, 'From: district_update_inventory.php') ;
+mail ('user@localhost', 'Change in inventory', $body, 'From: district_update_inventory.php') ;
 
 include ('../includes/footer_district.html');
 mysql_close();

@@ -114,7 +114,7 @@ echo '<p>The values for the three colors are ' . $cyan . ' ' . $magenta . ' ' . 
 						$result = mysql_query($query);
 
 				$body = "The values in toner and printer_toner_matrix have been updated, adding BLACK ink number '$black' and color number '$color_black' ('$pid','$inkid') .\n\n" ;
-				mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+				mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 
  
 					} else {
@@ -149,7 +149,7 @@ If not new to database, simply associate new printer with existing toner in prin
 		$result = mysql_query($query);
 
 		$body = "The values in printer_toner_matrix have been updated, adding PID and INKID as follows: ('$pid','$inkid') $black was already entered.\n\n" ;
-		mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+		mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 								}
 
 
@@ -208,7 +208,7 @@ if ( !empty($multi)) {
 				$result = mysql_query($query);
 
 				$body = "The values in toner and printer_toner_matrix have been updated, adding MULTI ink number '$multi' and color number '$color_multi'. PID and INKID: ('$pid','$inkid') .\n\n" ;
-				mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+				mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 
  
 			}						//END IF ENTER GOES THRU
@@ -240,7 +240,7 @@ if ( !empty($multi)) {
 		$result = mysql_query($query);
 
 		$body = "The values in printer_toner_matrix have been updated, adding MULTI PID and INKID as follows: ('$pid','$inkid') $multi was already entered.\n\n" ;
-		mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+		mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 		}
 
 
@@ -295,7 +295,7 @@ if ( !empty($cyan)) {						//OPEN UPDATE COLORS
 						}
 
 						$body = "The values in toner and printer_toner_matrix have been updated, adding ink number '$cyan', '$magenta', '$yellow' with color number '$color_cyan', '$color_magenta', '$color_yellow) and in pinks for three entries, i.e. ('$pid','$inkid') .\n\n" ;
-						mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+						mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 						
 					}				// CLOSE UPDATE PINKS
 			
@@ -319,7 +319,7 @@ if ( !empty($cyan)) {						//OPEN UPDATE COLORS
 
 
 					$body = "The values in PINKS have been updated for PID and INKID: ('$pid','$inkid') .\n\n" ;
-					mail ('ptitus@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
+					mail ('user@localhost', 'Change in printers database', $body, 'From: district_add_ink.php') ;
 
 					}
 		}						// CLOSE IF NUM=1
