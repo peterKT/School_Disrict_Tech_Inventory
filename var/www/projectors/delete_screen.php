@@ -32,7 +32,7 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 				<p><br /><br /></p>';
 
 	$body = "Screen with ID '$id' has been deleted.  It was a '$screen' type screen, in school '$school', room '$room'. \n\n" ;
-	mail ('ptitus@localhost', 'Deleted Screen', $body, 'From: delete_screen.php');
+	mail ('user@localhost', 'Deleted Screen', $body, 'From: delete_screen.php');
 
 
 mysql_close();

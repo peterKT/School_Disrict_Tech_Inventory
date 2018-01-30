@@ -56,7 +56,7 @@ $query4 = "UPDATE projectors SET model_id=$model WHERE projector_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Model information for projector with ID '$id' has been edited.  The new model ID is '$model' \n\n" ;
-	mail ('ptitus@localhost', 'Change in projectorss database', $body, 'From: edit_projectors.php');
+	mail ('user@localhost', 'Change in projectorss database', $body, 'From: edit_projectors.php');
 	include ('../includes/footer.html');
 	exit();
 

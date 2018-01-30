@@ -100,7 +100,7 @@ if ($result) {
   <br /></p>';
   
   $body = "A new screen with ID '$screen_id' and serial number $serial has been added with location ID $locatin in $school .\n\n" ;
-	mail ('ptitus@localhost', 'Change in smartboards table', $body, 'From: add_screen.php');
+	mail ('user@localhost', 'Change in smartboards table', $body, 'From: add_screen.php');
 
  exit();
   }
@@ -135,7 +135,7 @@ echo "<p>The serial number was left blank.  If this is a Smartboard, you can add
 
  
   $body = "A new screen with ID '$screen_id' been added with locatin ID $location in $school .\n\n" ;
-	mail ('ptitus@localhost', 'Change in screens table', $body, 'From: add_screen.php');
+	mail ('user@localhost', 'Change in screens table', $body, 'From: add_screen.php');
   
  exit();
 

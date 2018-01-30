@@ -65,7 +65,7 @@ $query3 = "UPDATE smartboards SET screen_id=$model WHERE board_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Screen type information for screen with ID '$id' has been edited.  The new screen ID is '$model' \n\n" ;
-	mail ('ptitus@localhost', 'Changed Screen', $body, 'From: edit_screems.php');
+	mail ('user@localhost', 'Changed Screen', $body, 'From: edit_screems.php');
 			} else {
 			
 			echo '<h1 id="mainhead">System Error</h1>
@@ -97,7 +97,7 @@ $query3 = "UPDATE smartboards SET mount_id=$mount WHERE board_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Mount information for screen with ID '$id' has been edited.  The new mount ID is '$mount' \n\n" ;
-	mail ('ptitus@localhost', 'Change in projectorss database', $body, 'From: edit_screens.php');
+	mail ('user@localhost', 'Change in projectorss database', $body, 'From: edit_screens.php');
 			} else {
 			
 			echo '<h1 id="mainhead">System Error</h1>
@@ -129,7 +129,7 @@ $query4 = "UPDATE smartboards SET serial_no='$serial' WHERE board_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Serial number information for screen with ID '$id' has been edited.  The new serial number is '$serial' \n\n" ;
-	mail ('ptitus@localhost', 'Changed Screen Info', $body, 'From: edit_screems.php');
+	mail ('user@localhost', 'Changed Screen Info', $body, 'From: edit_screems.php');
 				} else {
 			
 			echo '<h1 id="mainhead">System Error</h1>

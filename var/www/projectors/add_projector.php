@@ -96,7 +96,7 @@ if ($result2) {
   <br /></p>';
   
   $body = "A new projector '$model' been added to room ID $room_id in $school.\n\n" ;
-	mail ('ptitus@localhost', 'Change in projectors database', $body, 'From: add_projector.php');
+	mail ('user@localhost', 'Change in projectors database', $body, 'From: add_projector.php');
   }
 
 

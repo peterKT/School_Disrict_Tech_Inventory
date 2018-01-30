@@ -32,7 +32,7 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 				<p><br /><br /></p>';
 
 	$body = "Projector with ID '$id' has been deleted.  Model '$model', school '$school', room '$room'. \n\n" ;
-	mail ('ptitus@localhost', 'Change in projectors database', $body, 'From: delete_projectors.php');
+	mail ('user@localhost', 'Change in projectors database', $body, 'From: delete_projectors.php');
 
 
 
