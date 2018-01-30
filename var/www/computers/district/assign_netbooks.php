@@ -1,8 +1,6 @@
 <?php # assign_netbooks.php
-//2018a
 
-
-$page_title = 'Assign Netbooks and Laptops';
+$page_title = 'Assign Mobile Devices';
 include ('../../includes/header_district_computers.html');
 
 
@@ -26,7 +24,6 @@ if (isset($_POST['person']) ) {
 if ( !empty($_POST['cname'] ) ) {
 	$cname = $_POST['cname'] ;
 	} else {
-	$cname = 'Unknown';
 	echo '<p>You did not enter a computer name so it will be set to UNKNOWN. Please correct ASAP.</p>';
 }
 
@@ -41,11 +38,9 @@ if (empty($errors)) {						// START IF EMPTY ERRORS, MUST CLOSE
 
 
 require_once ('../../../mysql_connect_inventory.php');
-//  require_once ('../../mysql_connect_computers.php');
+
 
 //CHECK FOR DUPLICATE SERVICE TAG
-
-// Actually, this system 
 
 $query = "SELECT computer_id FROM computers WHERE ( service_tag='$stag') ";
 $result = mysql_query($query);
@@ -53,8 +48,39 @@ if (mysql_num_rows($result)==0) {					// START NO DUPS, MUST CLOSE
 	
 echo "<p>This computer is not a duplicate</p>";
 
-  $query = "INSERT INTO computers (service_tag,model_id,asset_tag,teacher_id,computer_name) VALUES
-  ('$stag','$modelid','None','$personid','$cname')";
+
+// Determine school ID so we can create a location ID using room_name_id 958 (Mobile)
+
+$query= "SELECT school_id,last_name FROM teachers WHERE teacher_id='$personid'";
+$result = mysql_query($query) ;
+if ($result) {
+	$row = mysql_fetch_array($result, MYSQL_ASSOC) ;
+	$school_id = $row['school_id'] ;
+	$last_name = $row['last_name'] ;
+	} else {
+ 	echo '<h1 id="mainhead">System Error</h1>
+  	<p class="error">Your school or name info could not be determined due to a system error.</p>';
+  	echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
+  	echo '</body></html>';
+  	exit();
+}
+
+$query= "SELECT location_id FROM locations WHERE school_id='$school_id' AND room_name_id=958";
+$result = mysql_query($query) ;
+if ($result) {
+	$row = mysql_fetch_array($result, MYSQL_ASSOC) ;
+	$location_id = $row['location_id'] ;
+	} else {
+ 	echo '<h1 id="mainhead">System Error</h1>
+  	<p class="error">Your location could not be determined due to a system error.</p>';
+  	echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
+  	echo '</body></html>';
+  	exit();
+}
+
+
+  $query = "INSERT INTO computers (service_tag,model_id,location_id,teacher_id,computer_name) VALUES
+  ('$stag','$modelid','$location_id','$personid','$cname')";
 
 $result = mysql_query($query); 
 if ($result) {
@@ -63,8 +89,8 @@ if ($result) {
   <p>Your computer model and associated data went through--no duplicates.</p><p>
   <br /></p>';
   
-  $body = "A new netbook with ID '$modelid' and service tag '$stag' has been added to room $room .\n\n" ;
-	mail ('ptitus@localhost', 'Change in COMPUTER database', $body, 'From: assign_netbooks.php');
+  $body = "A new mobile device of type ID '$modelid' and service tag '$stag' has been assigned to Mr/Ms $last_name .\n\n" ;
+	mail ('user@localhost', 'Change in inventory database', $body, 'From: assign_netbooks.php');
   }
 
 
@@ -79,9 +105,8 @@ if ($result) {
   exit();
 }
 
-} else {   							//CLOSE NOT A DUPLICATE
-	echo "<p>Sorry, that service tag is already in the database.</p>";
-	echo "<p>Use /"Edit Mobile Devices/" to assign.</p>" 
+} else {   						//CLOSE NOT A DUPLICATE
+	echo "<p>Sorry, that service tag or computer name is already in the database.</p>";
 	mysql_close();  
 	exit();
 	
@@ -98,20 +123,15 @@ if ($result) {
 	exit();
 }
 
-										//close the submit
+							//close the submit
 }
 
 
 ?>
 
-
-
-
-
 <h2>Assign New Mobile Devices to People</h2>
-<p>Note: Computer names left blank will be set to "Unknown"
-<form action="assign_netbooks" method="post">
-<fieldset><legend>Use This Form to Assign</legend>
+<form action="assign_netbooks.php" method="post">
+<fieldset><legend>Use This Form Only to Assign New Devices</legend>
 <!--BEGIN SELECT COMPUTER MODEL  -->
 
 <h3>Select Device Model</h3>
@@ -120,8 +140,7 @@ if ($result) {
 
 require_once ('../../../mysql_connect_inventory.php');
 
-
-$query = "SELECT mf,model,model_id,computer_type FROM manufacturers,computer_models,computer_types WHERE computer_models.mf_id=manufacturers.mf_id AND computer_models.ct_id=computer_types.ct_id AND (computer_types.ct_id=3 OR computer_types.ct_id=5 OR computer_types.ct_id=9 OR computer_types.ct_id=10) ORDER BY computer_models.model DESC" ;
+$query = "SELECT model,model_id,computer_type FROM computer_models,computer_types WHERE computer_models.ct_id=computer_types.ct_id AND (computer_types.ct_id=3 OR computer_types.ct_id=5) ORDER BY computer_models.model DESC" ;
 
 $result = @mysql_query($query);
 
@@ -131,7 +150,6 @@ if ($result) {
   echo '<select name="model">';
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
   	echo '<option value="' . $row['model_id'] . '">' . ' ' . $row['model'] . ' ' . $row['computer_type'] . '</option>\\n';
-
 
   	}  echo '</select>'; 
 	
@@ -158,8 +176,7 @@ exit();
 
 <?php
 
-//require_once ('../../mysql_connect_inventory.php');
-//require_once ('../../mysql_connect_computers.php');
+require_once ('../../../mysql_connect_inventory.php');
 
 //Identify Person
 
@@ -180,7 +197,7 @@ if ($result) {
 
 mysql_free_result ($result);
 } else {
-  echo '<p class="error">The people\'s names could not be retrieved. 
+  echo '<p class="error">People\'s names could not be retrieved. 
 We apologize for any inconvenience.</p>';
 
   echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
@@ -196,11 +213,9 @@ exit();
 ?>" /></p>
 
 
-<p>Service Tag: <input type="text" name="stag" size="8" maxlength="10" value="<?php if 
+<p>Service Tag: <input type="text" name="stag" size="16" maxlength="16" value="<?php if 
 (isset($_POST['stag'])) echo $_POST['stag'];
 ?>" /></p>
-
-
 
 
 </fieldset>
@@ -209,8 +224,6 @@ exit();
 <input type="submit" name="submit" value="Submit"/></div>
 <input type="hidden" name="submitted" value="TRUE"/>
 </form>
-
-
 
 
 <?php

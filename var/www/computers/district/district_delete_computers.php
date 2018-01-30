@@ -48,7 +48,7 @@ if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 				<p><br /><br /></p>';
 
 	$body = "Computer with ID '$id' has been deleted.  Service tag '$tag' and name '$cname'. \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: district_delete_computers.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: district_delete_computers.php');
 
 
 

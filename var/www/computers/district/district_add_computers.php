@@ -117,7 +117,7 @@ if ($result) {
   echo "The room  was $room <br />";
   
   $body = "A new computer with ID '$modelid' and service tag '$stag' has been added to $school .\n\n" ;
-	mail ('ptitus@localhost', 'Change in COMPUTER database', $body, 'From: district_add_computers.php');
+	mail ('user@localhost', 'Change in COMPUTER database', $body, 'From: district_add_computers.php');
   }
 
 

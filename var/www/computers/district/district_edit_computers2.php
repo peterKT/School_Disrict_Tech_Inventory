@@ -96,7 +96,7 @@ if (empty($errors)) {						//OPEN IF NO ERRORS
 				<p><br /><br /></p>';
 
 	$body = "Information for computer with ID '$id' has been edited.  One or more of the following values were updated: name ($computer_name), service tag ($stag). \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_computers2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: district_edit_computers2.php');
 
 
 			} else {
@@ -134,7 +134,7 @@ $query7 = "UPDATE computers,locations,room_names SET computers.location_id=locat
 
 
 	$body = "Room information for computer with ID '$id' has been edited.  The new room ID is '$room' \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_computers2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: district_edit_computers2.php');
 
 
 			} else {
@@ -184,7 +184,7 @@ $query4 = "UPDATE computers SET model_id=$model WHERE computer_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Model information for computer with ID '$id' has been edited.  The new model ID is '$model' \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: district_edit_computers2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: district_edit_computers2.php');
 	include ('../../includes/footer.html');
 	exit();
 

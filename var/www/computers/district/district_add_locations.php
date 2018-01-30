@@ -122,7 +122,7 @@ if (isset($_POST['submitted2']) ) {				// START SUBMIT, MUST CLOSE
         echo "The room  was $new_room_name <br />";
   
         $body = "A new room with ID $room_name_id and called $new_room_name has been added to $school .\n\n" ;
-	mail ('ptitus@localhost', 'Change in COMPUTER database', $body, 'From: district_add_locations.php');
+	mail ('user@localhost', 'Change in COMPUTER database', $body, 'From: district_add_locations.php');
         } else {
         echo '<h1 id="mainhead">System Error</h1>
         <p class="error">Your model data could not be entered due to a system error. No data was sent.</p>';

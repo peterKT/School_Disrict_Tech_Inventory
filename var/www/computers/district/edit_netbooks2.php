@@ -82,7 +82,7 @@ if (empty($errors)) {						//OPEN IF NO ERRORS
 				<p><br /><br /></p>';
 
 	$body = "Information for computer with ID '$id' has been edited.  One or more of the following values were updated: name ($computer_name), service tag ($stag). \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
 
 
 			} else {
@@ -120,7 +120,7 @@ $query7 = "UPDATE computers SET teacher_id=$teacher WHERE computer_id=$id";
 
 
 	$body = "Teacher assignment information for computer with ID '$id' has been edited.  The new teacher is '$teacher' \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
 
 
 			} else {
@@ -154,7 +154,7 @@ $query4 = "UPDATE computers SET model_id=$model WHERE computer_id=$id";
 				<p><br /><br /></p>';
 
 	$body = "Model information for computer with ID '$id' has been edited.  The new model ID is '$model' \n\n" ;
-	mail ('ptitus@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
+	mail ('user@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
 	include ('../includes/footer.html');
 	exit();
 
