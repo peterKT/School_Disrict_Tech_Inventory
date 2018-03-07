@@ -16,7 +16,7 @@ if (isset($_GET['np']) ) {
 	
 	} else {
 	
-	$query = "SELECT COUNT(*) FROM computers WHERE teacher_id != 143 ORDER BY service_tag ASC";
+	$query = "SELECT COUNT(*) FROM computers WHERE teacher_id != 0 ORDER BY service_tag ASC";
 	$result = mysql_query($query);
 	
 
@@ -107,7 +107,7 @@ if (isset($_GET['sort']) ) {
 
 //echo '<p>start = ' . $start . '</p>';
 
-$query = "SELECT CONCAT(first_name, ' ',last_name) AS teacher, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM teachers, computers, computer_models, computer_types WHERE computers.teacher_id != 143 AND teachers.teacher_id=computers.teacher_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id ORDER BY $order_by LIMIT $start,$display";
+$query = "SELECT CONCAT(first_name, ' ',last_name) AS teacher, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM teachers, computers, computer_models, computer_types WHERE computers.teacher_id != 0 AND teachers.teacher_id=computers.teacher_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id ORDER BY $order_by LIMIT $start,$display";
 
 
 $result = @mysql_query($query);

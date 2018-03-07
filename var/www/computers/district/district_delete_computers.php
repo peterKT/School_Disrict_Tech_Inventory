@@ -17,22 +17,6 @@ include ('../../includes/footer.html');
 exit();
 }
 
-/*
-
-if (  (isset($_GET['schools']))  && (is_numeric($_GET['schools'])) )  {		//CHECK FOR CORRECT INPUT
-	$school_id=$_GET['schools'] ; 
-} elseif ( (isset($_POST['schools'])) && (is_numeric($_POST['schools'])) ) {
-	$school_id=$_POST['schools'] ;
-} else {
-	echo '<h1 id="mainhead">
-	Page Error</h1>
-	<p class="error">This edit-inventory page has been accessed in error because the schools value is wrong.</p><p><br /><br /></p>';
-include ('../../includes/footer.html');
-exit();
-}
-
-
-*/
 
 require_once ('../../../mysql_connect_inventory.php');
 

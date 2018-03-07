@@ -28,7 +28,7 @@ if ( !empty($_POST['cname'] ) ) {
 }
 
 if (empty($_POST['stag'])) {	
-  $errors[] = 'You must enter a service tag.';
+  $errors[] = 'You must enter a service tag or serial number.';
 } else {
   $stag = $_POST['stag'];	
 }
@@ -49,7 +49,7 @@ if (mysql_num_rows($result)==0) {					// START NO DUPS, MUST CLOSE
 echo "<p>This computer is not a duplicate</p>";
 
 
-// Determine school ID so we can create a location ID using room_name_id 958 (Mobile)
+// Determine school ID 
 
 $query= "SELECT school_id,last_name FROM teachers WHERE teacher_id='$personid'";
 $result = mysql_query($query) ;
@@ -65,22 +65,10 @@ if ($result) {
   	exit();
 }
 
-$query= "SELECT location_id FROM locations WHERE school_id='$school_id' AND room_name_id=958";
-$result = mysql_query($query) ;
-if ($result) {
-	$row = mysql_fetch_array($result, MYSQL_ASSOC) ;
-	$location_id = $row['location_id'] ;
-	} else {
- 	echo '<h1 id="mainhead">System Error</h1>
-  	<p class="error">Your location could not be determined due to a system error.</p>';
-  	echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
-  	echo '</body></html>';
-  	exit();
-}
 
 
-  $query = "INSERT INTO computers (service_tag,model_id,location_id,teacher_id,computer_name) VALUES
-  ('$stag','$modelid','$location_id','$personid','$cname')";
+  $query = "INSERT INTO computers (service_tag,model_id,teacher_id,computer_name) VALUES
+  ('$stag','$modelid','$personid','$cname')";
 
 $result = mysql_query($query); 
 if ($result) {
@@ -140,7 +128,7 @@ if ($result) {
 
 require_once ('../../../mysql_connect_inventory.php');
 
-$query = "SELECT model,model_id,computer_type FROM computer_models,computer_types WHERE computer_models.ct_id=computer_types.ct_id AND (computer_types.ct_id=3 OR computer_types.ct_id=5) ORDER BY computer_models.model DESC" ;
+$query = "SELECT model,model_id,computer_type FROM computer_models,computer_types WHERE computer_models.ct_id=computer_types.ct_id AND (computer_types.ct_id=3 OR computer_types.ct_id=5 OR computer_types.ct_id=6 OR computer_types.ct_id=7) ORDER BY computer_models.model DESC" ;
 
 $result = @mysql_query($query);
 

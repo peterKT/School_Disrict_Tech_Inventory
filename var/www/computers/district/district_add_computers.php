@@ -4,8 +4,6 @@
 
 $page_title = 'Add Computers';
 
-//include ('../../includes/header_district_computers2.php'
-
 include ('../../includes/header_district_computers.html');
 
 
@@ -175,9 +173,9 @@ School ID = $school_id" ;
 
 require_once ('../../../mysql_connect_inventory.php');
 
-// EXCLUDES OBSOLETE MODELS
+// Pick the model
 
-$query = "SELECT mf,model,model_id,computer_models.mf_id, computer_type FROM computer_models,manufacturers,computer_types WHERE computer_models.mf_id=manufacturers.mf_id AND computer_models.ct_id=computer_types.ct_id AND computer_models.model_id NOT IN (1,4,5,6,9,10,13,14,17,20,21,30,32,33) ORDER BY computer_models.model" ;
+$query = "SELECT mf,model,model_id,computer_models.mf_id, computer_type FROM computer_models,manufacturers,computer_types WHERE computer_models.mf_id=manufacturers.mf_id AND computer_models.ct_id=computer_types.ct_id ORDER BY computer_models.model" ;
 
 $result = @mysql_query($query);
 

@@ -262,7 +262,7 @@ exit();
 else if ($search=='P'   ) {
 
 
-$query = "SELECT CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag,CONCAT(first_name, ' ', last_name) as person,service_tag,computer_name FROM manufacturers,computer_models, computer_types, computers,locations,teachers WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND computers.teacher_id=teachers.teacher_id AND computers.teacher_id != 143 AND locations.school_id = $school_id ORDER BY teachers.last_name";
+$query = "SELECT CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag,CONCAT(first_name, ' ', last_name) as person,service_tag,computer_name FROM manufacturers,computer_models, computer_types, computers,locations,teachers WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND computers.teacher_id=teachers.teacher_id AND computers.teacher_id != 0 AND locations.school_id = $school_id ORDER BY teachers.last_name";
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);
