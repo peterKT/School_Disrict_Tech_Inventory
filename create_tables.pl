@@ -12,7 +12,7 @@ chomp ($admin_pw);
 print "Great. Give me a sec, I will try using $admin_name and $admin_pw.\n";
 
 $server = 'localhost';
-$db = 'test';
+$db = 'inventory';
 $username = $admin_name;
 $password = $admin_pw;
 
