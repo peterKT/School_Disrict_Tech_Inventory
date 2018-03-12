@@ -99,7 +99,7 @@ $query = "SELECT CONCAT(mf, ' ',model) AS model,room_name,projector_id FROM manu
 
 echo '<p>Model: ' . $row[0] . '</p>
 
-<p>Change the model information?  Currently you it listed as a ' . $row[0] . '</p>
+<p>Change the model information?  Currently listed as a ' . $row[0] . '</p>
 
 <p> <input type="radio" name="change_model" value="no">  No </p>
 <p> <input type="radio" name="change_model" value="yes">  Yes (select from following list) </p>' ;
