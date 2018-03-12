@@ -36,8 +36,14 @@ if ($view == 'printers') {
 	
 $page_title = 'Edit printer locations';
 
-$query2 = "SELECT room_name,location_id FROM room_names,locations WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id NOT IN (SELECT location_id FROM printers) AND room_names.room_name_id NOT IN (5,122,123,112,168,255,348,662, 663,664,665,666,667,685,738, 958,1088,1093,1102, 1104,1090, 1111,1101,1087, 1157,1113,1120,1112,1149)  ORDER BY room_name" ;
+$query2 = "SELECT room_name,location_id FROM room_names,locations WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id NOT IN (SELECT location_id FROM printers)" ;
 
+
+# Suggested Alternative. This comes in handy when you want to exclude certain locations
+# that are not relevant. This is just an example where the room_name_ids would match things
+# like 'Unknown', or 'Mobile Cart'. 
+
+//$query2 = "SELECT room_name,location_id FROM room_names,locations WHERE locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id AND locations.location_id NOT IN (SELECT location_id FROM printers) AND room_names.room_name_id NOT IN (5,122,123,112,168,255,348,662, 663,664,665,666,667,685,738, 958,1088,1093,1102, 1104,1090, 1111,1101,1087, 1157,1113,1120,1112,1149)  ORDER BY room_name" ;
 
 
 $result2 = @mysql_query($query2);
