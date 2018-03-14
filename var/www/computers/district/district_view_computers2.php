@@ -43,7 +43,7 @@ if (isset($_GET['np']) ) {
 	
 	} else {
 	
-$query = "SELECT COUNT(*) FROM computers WHERE teacher_id = 0 AND school_id=$school_id ORDER BY service_tag ASC";
+$query = "SELECT COUNT(*) FROM computers,locations,schools WHERE teacher_id = 1 AND computers.location_id = locations.location_id AND locations.school_id = schools.school_id and schools.school_id=$school_id ORDER BY service_tag ASC";
 	$result = mysql_query($query);
 	
 
@@ -130,7 +130,7 @@ if (isset($_GET['sort']) ) {
 	$sort = "stagd&schools=$school_id";
 }
 
-$query = "SELECT room_name, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM room_names,locations, computer_models, computer_types, computers WHERE computers.location_id=locations.location_id AND locations.school_id=$school_id AND room_names.room_name_id=locations.room_name_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.teacher_id = 0 ORDER BY $order_by LIMIT $start,$display";
+$query = "SELECT room_name, computer_id, CONCAT(model, ' ',computer_type) AS model, computer_name, service_tag FROM room_names,locations, computer_models, computer_types, computers WHERE computers.location_id=locations.location_id AND locations.school_id=$school_id AND room_names.room_name_id=locations.room_name_id AND computers.model_id=computer_models.model_id AND computer_models.ct_id=computer_types.ct_id AND computers.teacher_id = 1 ORDER BY $order_by LIMIT $start,$display";
 
 $result = @mysql_query($query);
 
