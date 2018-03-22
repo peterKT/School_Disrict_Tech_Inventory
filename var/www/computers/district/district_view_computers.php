@@ -4,7 +4,7 @@
 //Open the search preference form based on school selection submission
 
 
-if ($_POST['submit']) {					//OPEN SUBMIT
+if (isset($_POST['submit'])) {					//OPEN SUBMIT
 
 $page_title = 'View district computers by school';
 
@@ -67,7 +67,7 @@ Info Request" /></div>
 
 //Query inventory database based on information submitted in search preference form
 
-if ($_POST['submit2']) {
+if (isset($_POST['submit2'])) {
 
 $page_title = 'View district computers by selected school';
 
