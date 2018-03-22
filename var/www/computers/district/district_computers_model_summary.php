@@ -105,7 +105,7 @@ exit();
 <h2>Use this form to review district computer inventory by model.</h2>
 
 <?php
-  require_once ('../../../mysql_connect_computers.php');
+  require_once ('../../../mysql_connect_inventory.php');
 
  
 $query2 = "SELECT model,model_id,computer_type FROM computer_models,computer_types WHERE computer_models.ct_id=computer_types.ct_id ORDER BY computer_models.model" ;
