@@ -55,7 +55,7 @@ Info Request" /></div>
 </form>
 
 <?php
-if ($_POST['submit1']) {					//OPEN SUBMIT 
+if (isset($_POST['submit1'])) {					//OPEN SUBMIT 
 
 
 if ( isset($_POST['search1'])   ) {	
@@ -145,7 +145,7 @@ Info Request" /></div>
 
 <?php
 
-if ($_POST['submit2']) {					//OPEN SUBMIT 2
+if (isset($_POST['submit2'])) {					//OPEN SUBMIT 2
 
 if ( isset($_POST['search2'])   ) {	
 
