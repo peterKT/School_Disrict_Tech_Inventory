@@ -3,7 +3,7 @@
 //accessed through edit_netbooks2.php
 
 $page_title = 'Edit Netbook Info';
-include ('../includes/header_computers2.html');
+include ('../../includes/header_computers2.html');
 
 
 if (  (isset($_GET['id']))  && (is_numeric($_GET['id'])) )  {		//CHECK FOR CORRECT INPUT
@@ -14,11 +14,11 @@ if (  (isset($_GET['id']))  && (is_numeric($_GET['id'])) )  {		//CHECK FOR CORRE
 	echo '<h1 id="mainhead">
 	Page Error</h1>
 	<p class="error">This here page has been accessed in error.</p><p><br /><br /></p>';
-include ('../includes/footer.html');
+include ('../../includes/footer.html');
 exit();
 }
 
-  require_once ('../../mysql_connect_computers.php');
+  require_once ('../../../mysql_connect_inventory.php');
 
 if (isset($_POST['submitted'])) {					//OPEN SUBMITTED
 
@@ -90,7 +90,7 @@ if (empty($errors)) {						//OPEN IF NO ERRORS
 			echo '<h1 id="mainhead">System Error</h1>
 				<p class="error">The computer data could not be edited due to a system error. We aplogize for any inconvenience.</p>';
 			echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query3 . '</p>';
-			include ('../includes/footer.html');
+			include ('../../includes/footer.html');
 			exit();
 			}
 
@@ -128,7 +128,7 @@ $query7 = "UPDATE computers SET teacher_id=$teacher WHERE computer_id=$id";
 			echo '<h1 id="mainhead">System Error</h1>
 				<p class="error">The computer assignment could not be edited due to a system error. </p>';
 			echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query7 . '</p>';
-			include ('../includes/footer.html');
+			include ('../../includes/footer.html');
 			exit();
 			}
 }
@@ -136,7 +136,7 @@ $query7 = "UPDATE computers SET teacher_id=$teacher WHERE computer_id=$id";
 
 if ( $cm === "no" ) {
 	echo '<p>The computer model information has not been edited.</p>';
-	include ('../includes/footer.html');
+	include ('../../includes/footer.html');
 	exit();	
 
 	}
@@ -155,7 +155,7 @@ $query4 = "UPDATE computers SET model_id=$model WHERE computer_id=$id";
 
 	$body = "Model information for computer with ID '$id' has been edited.  The new model ID is '$model' \n\n" ;
 	mail ('user@localhost', 'Change in computers database', $body, 'From: edit_netbooks2.php');
-	include ('../includes/footer.html');
+	include ('../../includes/footer.html');
 	exit();
 
 			} else {
@@ -163,7 +163,7 @@ $query4 = "UPDATE computers SET model_id=$model WHERE computer_id=$id";
 			echo '<h1 id="mainhead">System Error</h1>
 				<p class="error">The computer model could not be edited due to a system error. This error can occur if your selected model matches the currently listed model.</p>';
 			echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query4 . '</p>';
-			include ('../includes/footer.html');
+			include ('../../includes/footer.html');
 			exit();
 			}
 }
@@ -288,6 +288,6 @@ echo '
 
 
 mysql_close();
-include ('../includes/footer.html');
+include ('../../includes/footer.html');
 
 ?>

@@ -313,10 +313,6 @@ echo '
 
 	<p>Service Tag: <input type="text" name="stag" size="10" maxlength="10" value="' . $row[4] . '" /></p>
 
-  
-<!--  <p>Asset Tag: <input type="text" name="atag" size="20" maxlength="24" value="' . $row[5] . '" /></p>
--->	
-
 	<p><input type="submit" name="submit" value="Submit"
 		/></p>
 	<input type="hidden" name="submitted" value="TRUE"

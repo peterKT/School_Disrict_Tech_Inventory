@@ -3,7 +3,7 @@
 //2018a
 
 $page_title = 'View Rooms';
-include ('../includes/header_computers2.html');
+include ('../../includes/header_computers2.html');
 ?>
 
 <form action="view_rooms.php" method="post">
@@ -21,9 +21,9 @@ Info Request" /></div>
 
 <?php
 
-if ( $_POST['submit'] )  {  			//OPEN SUBMIT
+if (isset($_POST['submit']))  {  			//OPEN SUBMIT
 
-  require_once ('../../mysql_connect_computers.php');
+  require_once ('../../../mysql_connect_inventory.php');
 
 if (isset($_POST['all']) ) {
 	$floor0=$_POST['all'];
@@ -205,7 +205,7 @@ mysql_free_result ($result);
 
 }	
 		//CLOSE THE SUBMIT
-include ('../includes/footer.html');
+include ('../../includes/footer.html');
 
 ?>
 

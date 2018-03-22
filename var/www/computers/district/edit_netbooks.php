@@ -2,13 +2,13 @@
 //2018a
 $page_title = 'View and Edit Notebooks';
 
-include ('../includes/header_computers2.html');
+include ('../../includes/header_computers2.html');
 echo '<h1 id="mainhead" align="center">South H.S. Netbook/Laptop Computers Assigned to People</h1>';
 
 
 
 
-require_once ('../../mysql_connect_computers.php');
+require_once ('../../../mysql_connect_inventory.php');
 $display = 200 ;
 
 if (isset($_GET['np']) ) {
@@ -180,7 +180,7 @@ if ($num_pages > 1) {
 
 
 
-include ('../includes/footer.html');
+include ('../../includes/footer.html');
 ?>
 
 

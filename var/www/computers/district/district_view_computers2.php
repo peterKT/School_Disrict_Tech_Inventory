@@ -23,7 +23,7 @@ require_once ('../../../mysql_connect_inventory.php');
 $query = "SELECT school FROM schools WHERE school_id = $school_id";
 
 
-$result = @mysql_query($query);
+$result = @mysql_query($query); 
 
   while ($row = mysql_fetch_array($result, MYSQL_ASSOC) ) {
 $school = $row['school'];
@@ -168,23 +168,11 @@ $bg = '#eeeeee';
 
 
 
-<!--  
-
-  <td align="left"><a href="district_edit_computers2.php?id=' . $row['computer_id'] . '&schools=' . $row['school_id'] . ' ">Edit</a></td>
-
-  <td align="left"><a href="district_delete_computers.php?id=' . $row['computer_id'] . '&schools=' . $row['school_id'] . ' ">Delete</a></td>
-
--->
-
-
   <td align="left">' . $row['room_name'] . '</td>
   <td align="left" style="white-space: nowrap">' . $row['model'] . '</td>	
   <td align="left">' . $row['computer_name'] . '</td>
   <td align="left">' . $row['service_tag'] . '</td>
   
-<!--  
-  <td align="left">' . $row['asset_tag'] . '</td>
--->
   </tr>';
 }
   echo '</table>';
