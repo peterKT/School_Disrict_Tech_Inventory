@@ -133,7 +133,7 @@ $sth = $dbh->prepare($query18);
 
 $sth->execute();
 
-$query19 = "CREATE TABLE toner (toner_id SMALLINT(4) UNSIGNED NOT NULL AUTO_INCREMENT, tpmer_no VARCHAR(12) NOT NULL, toner_color_id SMALLINT(4) UNSIGNED NOT NULL, toner_alias VARCHAR(8) NOT NULL DEFAULT 'None', PRIMARY KEY (toner_id) )";
+$query19 = "CREATE TABLE toner (toner_id SMALLINT(4) UNSIGNED NOT NULL AUTO_INCREMENT, toner_no VARCHAR(12) NOT NULL, toner_color_id SMALLINT(4) UNSIGNED NOT NULL, toner_alias VARCHAR(8) NOT NULL DEFAULT 'None', PRIMARY KEY (toner_id) )";
 
 $sth = $dbh->prepare($query19);
 
