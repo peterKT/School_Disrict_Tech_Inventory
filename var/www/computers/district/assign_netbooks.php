@@ -51,15 +51,15 @@ echo "<p>This computer is not a duplicate</p>";
 
 // Determine school ID 
 
-$query= "SELECT school_id,last_name FROM teachers WHERE teacher_id='$personid'";
+$query= "SELECT last_name,location_id FROM teachers,locations WHERE teachers.teacher_id='$personid' AND teachers.school_id=locations.school_id AND locations.room_name_id=1";
 $result = mysql_query($query) ;
 if ($result) {
 	$row = mysql_fetch_array($result, MYSQL_ASSOC) ;
-	$school_id = $row['school_id'] ;
+	$location_id = $row['location_id'] ;
 	$last_name = $row['last_name'] ;
 	} else {
  	echo '<h1 id="mainhead">System Error</h1>
-  	<p class="error">Your school or name info could not be determined due to a system error.</p>';
+  	<p class="error">Your location or name info could not be determined due to a system error.</p>';
   	echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
   	echo '</body></html>';
   	exit();
@@ -67,8 +67,8 @@ if ($result) {
 
 
 
-  $query = "INSERT INTO computers (service_tag,model_id,teacher_id,computer_name) VALUES
-  ('$stag','$modelid','$personid','$cname')";
+  $query = "INSERT INTO computers (computer_name,service_tag,model_id,teacher_id,location_id) VALUES
+  ('$cname','$stag','$modelid','$personid','$location_id')";
 
 $result = mysql_query($query); 
 if ($result) {
@@ -95,6 +95,7 @@ if ($result) {
 
 } else {   						//CLOSE NOT A DUPLICATE
 	echo "<p>Sorry, that service tag or computer name is already in the database.</p>";
+	echo "<p>To transfer device, please delete existing entry and re-add with this form.</p>";
 	mysql_close();  
 	exit();
 	
