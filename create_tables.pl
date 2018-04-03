@@ -183,4 +183,10 @@ $query26 = "INSERT INTO teachers(last_name,first_name) VALUES('room info','See')
 $sth = $dbh->prepare($query26);
 
 $sth->execute();
+
+$query26 = "INSERT INTO room_names(room_name) VALUE('See Person')";
+
+$sth = $dbh->prepare($query26);
+
+$sth->execute();
 $dbh->disconnect;
