@@ -184,9 +184,9 @@ $sth = $dbh->prepare($query26);
 
 $sth->execute();
 
-$query26 = "INSERT INTO room_names(room_name) VALUE('See Person')";
+$query27 = "INSERT INTO room_names(room_name) VALUE('See Person')";
 
-$sth = $dbh->prepare($query26);
+$sth = $dbh->prepare($query27);
 
 $sth->execute();
 $dbh->disconnect;
