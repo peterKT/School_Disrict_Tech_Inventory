@@ -88,7 +88,7 @@ echo "<p>Sorry, that printer is already in the database.</p>";
 }
 
 
-				//Enter the printer's ink cartridge number(s) and its color
+//Enter the printer's ink cartridge number(s) and its color
 
 
 if (isset($_POST['yes']) )	{
@@ -138,6 +138,8 @@ if (isset($_POST['yes']) )	{
 
 ?>
 
+
+
 <h2>Add New Printers and Ink</h2>
 <form action="district_add_printers_info_nodups3.php" method="post">
 <fieldset><legend>Enter printer and ink information in the fields below</legend>
@@ -146,12 +148,47 @@ if (isset($_POST['yes']) )	{
 (isset($_POST['model'])) echo $_POST['model'];
 ?>" /></p>
 
-<p>Type: <select name="type"><option value="1">LaserJet</option>
-<option value="2">Business InkJet</option>
-<option value="3">Color LaserJet</option>
-<option value="4">Color DesignJet</option>
-<option value="5">DeskJet</option>
-<option value="6">Multifunction</option></select>
+<p>Type:</p>
+
+
+<?php
+require_once('../../mysql_connect_inventory.php');
+
+$query = "SELECT pt_id,type FROM printer_types";
+
+$result = @mysql_query($query);
+
+if ($result) {
+ 
+  echo '<select name="type">';
+  while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+  	echo '<option value="' . $row['pt_id'] . '">' . '  ' . $row['type'] .   '</option>\\n';
+  	}  echo '</select>'; 
+	
+
+mysql_free_result ($result);
+} else {
+  echo '<p class="error">The printer types could not be retrieved. 
+We apologize for any inconvenience.</p>';
+
+  echo '<p>' . mysql_error() . '<br /><br />Query: ' . $query . '</p>';
+
+
+mysql_close();  
+exit();
+ }
+
+?>
+
+
+
+
+
+
+
+
+
+
 </p>
 
 <p>Would you like to add the ink cartridge information for this printer?</p>
