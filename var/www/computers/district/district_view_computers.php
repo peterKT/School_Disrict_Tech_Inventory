@@ -174,7 +174,7 @@ exit();
 
 else if ($search=='R'   ) {
 
-$query = "SELECT room_name, computer_name,CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag FROM manufacturers,computer_models, computer_types, computers, room_names,locations WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id ORDER BY room_name" ;
+$query = "SELECT room_name, computer_name,CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag FROM manufacturers,computer_models, computer_types, computers, room_names,locations WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.teacher_id=1 AND computers.location_id=locations.location_id AND locations.room_name_id=room_names.room_name_id AND locations.school_id = $school_id ORDER BY room_name" ;
 
 
 $result = @mysql_query($query);
@@ -262,7 +262,7 @@ exit();
 else if ($search=='P'   ) {
 
 
-$query = "SELECT CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag,CONCAT(first_name, ' ', last_name) as person,service_tag,computer_name FROM manufacturers,computer_models, computer_types, computers,teachers,schools WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND computers.teacher_id=teachers.teacher_id AND teachers.school_id = $school_id ORDER BY teachers.last_name";
+$query = "SELECT CONCAT(mf, ' ',model, ' ', computer_type) AS model,service_tag,CONCAT(first_name, ' ', last_name) as person,service_tag,computer_name FROM manufacturers,computer_models, computer_types, computers,teachers,locations WHERE computers.model_id=computer_models.model_id AND computer_models.mf_id=manufacturers.mf_id AND computer_types.ct_id = computer_models.ct_id AND computers.location_id=locations.location_id AND locations.room_name_id=1 AND locations.school_id = $school_id AND computers.teacher_id=teachers.teacher_id";
 
 $result = @mysql_query($query);
 $num = mysql_num_rows($result);

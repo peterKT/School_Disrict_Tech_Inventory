@@ -218,7 +218,7 @@ exit();
 echo "<h4>All rooms in $school</h4>";
 //echo "School ID is $school_id <br /><br />";	
 	
-$query = "SELECT locations.location_id,room_names.room_name_id,room_name FROM locations,room_names WHERE locations.school_id=$school_id AND locations.room_name_id=room_names.room_name_id ORDER BY room_name" ;
+$query = "SELECT locations.location_id,room_names.room_name_id,room_name FROM locations,room_names WHERE locations.school_id=$school_id AND locations.room_name_id=room_names.room_name_id AND room_names.room_name_id != 1ORDER BY room_name" ;
 
 $result = @mysql_query($query);
 
